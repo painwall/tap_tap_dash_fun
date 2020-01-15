@@ -7,7 +7,7 @@ from main.objects.skin import Skin
 from main.window import all_sprites
 player_group = pg.sprite.Group()
 # player_image = pg.image.load('textures/player.png')
-player_image = pg.image.load('C:/Users/poel/PycharmProjects/tap_tap_dash/textures/player.png')
+player_image = pg.image.load('../textures/player.png')
 
 
 class Player(pg.sprite.Sprite):
@@ -30,9 +30,9 @@ class Player(pg.sprite.Sprite):
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
         elif pg.sprite.spritecollide(self.skin, finish_tiles_group, False):
-            self.data_output(('playing', 'lvl'), (False, self.lvl + 1))
+            pass  # доделать какой-то ивент (50% переход )
         else:
-            self.data_output(('playing', 'restart_menu'), (False, True))
+            pass  # доделать какой-то ивент (50% переход в restart_menu)
 
         if 0 < pg.time.get_ticks() - self.time_start > 500:
             self.mode = 'run'
@@ -71,16 +71,9 @@ class Player(pg.sprite.Sprite):
                 self.check(270)
                 self.skin.rotate_skin(270, self.mode)
             else:
-                self.data_output(('playing', 'restart_menu'), (False, True))
+                pass # доделать какой-то ивент (50% переход в restart_menu)
 
             if pg.sprite.spritecollide(self, jump_tiles_group, False):
                 self.time_start = pg.time.get_ticks()
                 self.mode = 'fly'
                 self.skin.rotate_skin(self.n, self.mode)
-
-    def data_output(self, keys, value):
-        global DICT_DATA
-        dict_data = DICT_DATA.copy()
-        for ind_key in range(len(keys)):
-            dict_data[keys[ind_key]] = value[ind_key]
-        return dict_data

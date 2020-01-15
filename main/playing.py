@@ -27,7 +27,8 @@ class Play():
         self.generate_level()
 
     def generate_level(self):
-        image = Image.open(f'levels{self.level}/level.png')
+        delete_all_sprites()
+        image = Image.open(f'../levels/{self.level}/level.png')
         width = image.size[0]
         height = image.size[1]
 
@@ -71,10 +72,11 @@ class Play():
                     MoveUpTile(y, x)
                 elif image.getpixel((y, x)) == FINISH_TILE:
                     FinishTile(y, x)
-        self.player.speed = float(open(f'levels{self.level}/level.png').read())
+
+        self.player.speed = float(open(f'../levels/{self.level}/speed.txt', encoding='ANSI').read())
+        self.play()
 
     def play(self):
-        delete_all_sprites()
         running = True
         while running:
             screen.fill((0, 198, 255))
@@ -82,10 +84,11 @@ class Play():
             for event in pg.event.get():
                 player_group.update(event)
             self.player.move()
-            self.player.skin.move()
+            self.player.skin.move(self.player.rect.x, self.player.rect.x)
             camera.update(self.player)
             for sprite in all_sprites:
                 camera.apply(sprite)
+            print(all_sprites)
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()
@@ -96,3 +99,6 @@ class Play():
         # if int(LVL) > len(os.listdir('levels')):
         #     self.restart_menu = False
         #     self.lvl_menu = True
+
+
+Play(1)
