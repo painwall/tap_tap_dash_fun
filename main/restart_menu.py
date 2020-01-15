@@ -1,16 +1,20 @@
 import pygame as pg
-from start import screen, all_sprites, clock
-from .objects.buttons import ButtonGetLevelMenu, ButtonRestart
+from main.window import screen, all_sprites, clock
+from main.objects.buttons import ButtonGetLevelMenu, ButtonRestart
+from main.delete_all_sprites import delete_all_sprites
+
 
 class RestartMenu:
-    def __init__(self):
-        pass
+    def __init__(self, level):
+        self.level = level
+        self.run()
 
     def run(self):
         delete_all_sprites()
-        ButtonGetLevelMenu('textures/btn_lvls_start.png', 'textures/btn_lvls_final.png', 300, 275)
-        ButtonRestart(300, 375)
-        while MENU:
+        btn_get_lvl_menu = ButtonGetLevelMenu(300, 275)
+        btn_restart = ButtonRestart(300, 375)
+        running = True
+        while running:
             screen.fill((0, 198, 255))
             clock.tick(60)
             for event in pg.event.get():
@@ -18,5 +22,24 @@ class RestartMenu:
                     quit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     all_sprites.update(event)
+
+            if btn_get_lvl_menu.menu_close_open[0] == True:
+                print(btn_get_lvl_menu.menu_close_open, '')
+                menu_close_open = btn_get_lvl_menu.menu_close_open
+                running = False
+            elif btn_restart.menu_close_open[0] == True:
+                print('net')
+                menu_close_open = btn_restart.menu_close_open
+                running = False
+
             all_sprites.draw(screen)
             pg.display.flip()
+
+        if menu_close_open[1] == 'btn_get_lvl_menu':
+            from main.level_menu import LevelMenu
+            LevelMenu()
+        elif menu_close_open[1] == 'btn_restart':
+            print('da')
+            from main.playing import Play
+            Play(self.level)
+

@@ -39,8 +39,8 @@ class ButtonGetLevel(pg.sprite.Sprite):
 class ButtonGetStartMenu(pg.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(all_sprites)
-        self.image = pg.image.load('../textures/btn_menu_start.png')
-        self.final_image = pg.image.load('../textures/btn_menu_final.png')
+        self.image = pg.image.load('textures/btn_menu_start.png')
+        self.final_image = pg.image.load('textures/btn_menu_final.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.speed_x = 1
         self.menu_close_open = (False,)
@@ -73,10 +73,10 @@ class ButtonGetStartMenu(pg.sprite.Sprite):
 
 
 class ButtonGetLevelMenu(pg.sprite.Sprite):
-    def __init__(self, start_image, final_image, x, y):
+    def __init__(self, x, y):
         super().__init__(all_sprites)
-        self.final_image = pg.image.load(final_image)
-        self.image = pg.image.load(start_image)
+        self.image = pg.image.load('textures/btn_lvls_start.png')
+        self.final_image = pg.image.load('textures/btn_lvls_final.png')
         self.menu_close_open = ('False',)
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -98,10 +98,10 @@ class ButtonGetLevelMenu(pg.sprite.Sprite):
 
 
 class ButtonGetSkins(pg.sprite.Sprite):
-    def __init__(self, start_image, final_image, x, y):
+    def __init__(self, x, y):
         super().__init__(all_sprites)
-        self.final_image = pg.image.load(final_image)
-        self.image = pg.image.load(start_image)
+        self.image = pg.image.load('textures/btn_hero_start.png')
+        self.final_image = pg.image.load('textures/btn_hero_final.png')
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -123,11 +123,9 @@ class ButtonRestart(pg.sprite.Sprite):
         self.final_image = pg.image.load('textures/btn_restart_final.png')
         self.image = pg.image.load('textures/btn_restart_start.png')
         self.rect = self.image.get_rect()
+        self.menu_close_open = (False,)
         self.rect.x = x
         self.rect.y = y
-
-    def click(self):
-        self.image = pg.image.load()
 
     def update(self, *args):
         global PLAY
@@ -137,3 +135,7 @@ class ButtonRestart(pg.sprite.Sprite):
         if self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
             self.image = self.final_image
+            self.check()
+
+    def check(self):
+        self.menu_close_open = (True, 'btn_restart')

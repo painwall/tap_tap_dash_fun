@@ -28,7 +28,7 @@ class Play():
 
     def generate_level(self):
         delete_all_sprites()
-        image = Image.open(f'../levels/{self.level}/level.png')
+        image = Image.open(f'levels/{self.level}/level.png')
         width = image.size[0]
         height = image.size[1]
 
@@ -73,7 +73,7 @@ class Play():
                 elif image.getpixel((y, x)) == FINISH_TILE:
                     FinishTile(y, x)
 
-        self.player.speed = float(open(f'../levels/{self.level}/speed.txt', encoding='ANSI').read())
+        self.player.speed = float(open(f'levels/{self.level}/speed.txt', encoding='ANSI').read())
         self.play()
 
     def play(self):
@@ -83,22 +83,29 @@ class Play():
             clock.tick(60)
             for event in pg.event.get():
                 player_group.update(event)
+
+
             self.player.move()
             self.player.skin.move(self.player.rect.x, self.player.rect.x)
             camera.update(self.player)
             for sprite in all_sprites:
                 camera.apply(sprite)
-            print(all_sprites)
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()
+            print(self.player.menu_close_open, '123123123123123123')
+            if self.player.menu_close_open[0] == True:
+                menu_close_open = self.player.menu_close_open
+                running = False
 
-        # if not self.restart_menu and int(LVL) <= len(os.listdir('levels')):
-        #     self.playing = True
-        #     self.play(self.lvl)
-        # if int(LVL) > len(os.listdir('levels')):
-        #     self.restart_menu = False
-        #     self.lvl_menu = True
-
-
-Play(1)
+        if menu_close_open[1] == 'restart_menu':
+            from main.restart_menu import RestartMenu
+            RestartMenu(self.level)
+        elif menu_close_open[1] == 'new_level':
+            print(self.level, len(os.listdir('levels')))
+            if int(self.level) >= len(os.listdir('levels')):
+                from main.level_menu import LevelMenu
+                LevelMenu()
+            else:
+                print('fkfkkfkfkfkkfkfkkf')
+                Play(self.level + 1)
