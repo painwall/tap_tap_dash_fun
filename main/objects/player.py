@@ -73,7 +73,7 @@ class Player(pg.sprite.Sprite):
                 self.direction_of_movement(270)
                 self.skin.rotate_skin(270, self.mode)
 
-            if pg.sprite.spritecollide(self, jump_tiles_group, False):
+            if args[0].key ==32:
                 self.time_start = pg.time.get_ticks()
                 self.mode = 'fly'
                 self.skin.rotate_skin(self.n, self.mode)
