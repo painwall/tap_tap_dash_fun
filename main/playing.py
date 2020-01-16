@@ -81,11 +81,15 @@ class Play():
         print(all_sprites)
         running = True
         while running:
+            print('123123')
             screen.fill((0, 198, 255))
-            clock.tick(60)
+            print('123123')
             for event in pg.event.get():
                 player_group.update(event)
+
+            print('123123')
             self.player.move()
+            print('123123')
             self.player.skin.move(self.player.rect.x, self.player.rect.x)
             camera.update(self.player)
             for sprite in all_sprites:
