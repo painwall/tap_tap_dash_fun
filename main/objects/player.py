@@ -13,7 +13,7 @@ class Player(pg.sprite.Sprite):
 
         tile_width = tile_height = 64
         self.image = player_image
-        self.speed = 1
+        self.speed = 4
         self.rect = self.image.get_rect().move(tile_width * pos_x + 28, tile_height * pos_y + 28)
         self.mode = 'run'
         self.n = 0  # угол для class Skin
@@ -52,18 +52,20 @@ class Player(pg.sprite.Sprite):
     def update(self, *args):
         if args[0].type == pg.KEYUP:
             if args[0].key == 273:
+        if args[0].type == pg.MOUSEBUTTONDOWN:
+            if pg.sprite.spritecollideany(self, move_up_tiles_group):
                 self.n = 0
                 self.direction_of_movement(0)
                 self.skin.rotate_skin(0, self.mode)
-            elif args[0].key == 274:
+            elif pg.sprite.spritecollideany(self, move_down_tiles_group):
                 self.n = 180
                 self.direction_of_movement(180)
                 self.skin.rotate_skin(180, self.mode)
-            elif args[0].key == 276:
+            elif pg.sprite.spritecollideany(self, move_left_tiles_group):
                 self.n = 90
                 self.direction_of_movement(90)
                 self.skin.rotate_skin(90, self.mode)
-            elif args[0].key == 275:
+            elif pg.sprite.spritecollideany(self, move_right_tiles_group):
                 self.n = 270
                 self.direction_of_movement(270)
                 self.skin.rotate_skin(270, self.mode)

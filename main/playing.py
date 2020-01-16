@@ -82,6 +82,7 @@ class Play():
         running = True
         while running:
             screen.fill((0, 198, 255))
+            clock.tick(60)
             for event in pg.event.get():
                 player_group.update(event)
             self.player.move()
