@@ -23,6 +23,7 @@ RIGHT_JUMP_TILE = (153, 217, 234, 255)
 
 class Play():
     def __init__(self, level):
+        print(level, 'level')
         self.level = level
         self.generate_level()
 
@@ -77,13 +78,12 @@ class Play():
         self.play()
 
     def play(self):
+        print(all_sprites)
         running = True
         while running:
             screen.fill((0, 198, 255))
             for event in pg.event.get():
                 player_group.update(event)
-
-
             self.player.move()
             self.player.skin.move(self.player.rect.x, self.player.rect.x)
             camera.update(self.player)
@@ -96,7 +96,7 @@ class Play():
             if self.player.menu_close_open[0] == True:
                 menu_close_open = self.player.menu_close_open
                 running = False
-
+        print('asdfasdfasdf')
         if menu_close_open[1] == 'restart_menu':
             from main.restart_menu import RestartMenu
             RestartMenu(self.level)

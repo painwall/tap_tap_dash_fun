@@ -1,8 +1,5 @@
 import pygame as pg
-from main.objects.tiles import tiles_group, move_up_tiles_group, \
-    move_down_tiles_group, move_left_tiles_group, \
-    move_right_tiles_group, jump_tiles_group, \
-    finish_tiles_group
+from main.objects.tiles import tiles_group, finish_tiles_group
 from main.objects.skin import Skin
 from main.window import all_sprites
 player_group = pg.sprite.Group()
@@ -26,10 +23,10 @@ class Player(pg.sprite.Sprite):
         self.skin = Skin(self.rect.x, self.rect.y)
 
     def move(self):
-        if pg.sprite.spritecollideany(self.skin, tiles_group) or 0 < pg.time.get_ticks() - self.time_start <= 500:
+        if pg.sprite.spritecollideany(self.skin, tiles_group) or (0 < pg.time.get_ticks() - self.time_start <= 500):
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
-        elif pg.sprite.spritecollide(self.skin, finish_tiles_group, False):
+        if pg.sprite.spritecollide(self.skin.image, finish_tiles_group, False):
             self.check(True, 'new_level')
         else:
             self.check(True, 'restart_menu')
@@ -53,9 +50,7 @@ class Player(pg.sprite.Sprite):
             self.speed_y = 0
 
     def update(self, *args):
-        print(args[0])
         if args[0].type == pg.KEYUP:
-            print(args[0].key)
             if args[0].key == 273:
                 self.n = 0
                 self.direction_of_movement(0)
@@ -72,6 +67,9 @@ class Player(pg.sprite.Sprite):
                 self.n = 270
                 self.direction_of_movement(270)
                 self.skin.rotate_skin(270, self.mode)
+            else:
+                self.check(True, 'restart_menu')
+
 
             if args[0].key ==32:
                 self.time_start = pg.time.get_ticks()

@@ -39,7 +39,6 @@ class RestartMenu:
             from main.level_menu import LevelMenu
             LevelMenu()
         elif menu_close_open[1] == 'btn_restart':
-            print('da')
             from main.playing import Play
             Play(self.level)
 
