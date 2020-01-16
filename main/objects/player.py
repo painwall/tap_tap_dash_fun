@@ -16,7 +16,7 @@ class Player(pg.sprite.Sprite):
 
         tile_width = tile_height = 64
         self.image = player_image
-        self.speed = 4
+        self.speed = 1
         self.rect = self.image.get_rect().move(tile_width * pos_x + 28, tile_height * pos_y + 28)
         self.mode = 'run'
         self.n = 0  # угол для class Skin
@@ -53,25 +53,25 @@ class Player(pg.sprite.Sprite):
             self.speed_y = 0
 
     def update(self, *args):
-        if args[0].type == pg.MOUSEBUTTONDOWN:
-            if pg.sprite.spritecollideany(self, move_up_tiles_group):
+        print(args[0])
+        if args[0].type == pg.KEYUP:
+            print(args[0].key)
+            if args[0].key == 273:
                 self.n = 0
                 self.direction_of_movement(0)
                 self.skin.rotate_skin(0, self.mode)
-            elif pg.sprite.spritecollideany(self, move_down_tiles_group):
+            elif args[0].key == 274:
                 self.n = 180
                 self.direction_of_movement(180)
                 self.skin.rotate_skin(180, self.mode)
-            elif pg.sprite.spritecollideany(self, move_left_tiles_group):
+            elif args[0].key == 276:
                 self.n = 90
                 self.direction_of_movement(90)
                 self.skin.rotate_skin(90, self.mode)
-            elif pg.sprite.spritecollideany(self, move_right_tiles_group):
+            elif args[0].key == 275:
                 self.n = 270
                 self.direction_of_movement(270)
                 self.skin.rotate_skin(270, self.mode)
-            else:
-                self.check(True, 'restart_menu')
 
             if pg.sprite.spritecollide(self, jump_tiles_group, False):
                 self.time_start = pg.time.get_ticks()
