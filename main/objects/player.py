@@ -9,33 +9,37 @@ player_image = pg.image.load('textures/player.png')
 
 
 class Player(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y):
+    def __init__(self, pos_x, pos_y, speed):
         super().__init__(player_group, all_sprites)
 
         tile_width = tile_height = 64
         self.image = player_image
-        self.speed = 2
+        self.speed = speed
         self.rect = self.image.get_rect().move(tile_width * pos_x + 28, tile_height * pos_y + 28)
         self.mode = 'run'
+        self.time_start = pg.time.get_ticks()
         self.n = 0  # угол для class Skin
         self.direction_of_movement(0)
         self.menu_close_open = (False,)
-        self.time_start = 0
         self.skin = Skin(self.rect.x, self.rect.y)
 
     def move(self):
+        print(self.menu_close_open)
 
-        if pg.sprite.spritecollideany(self.skin, tiles_group) or (0 < pg.time.get_ticks() - self.time_start <= 500):
+        if pg.sprite.spritecollideany(self.skin, tiles_group) or 0 < pg.time.get_ticks() - self.time_start <= 500:
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
-
-        elif pg.sprite.spritecollide(self, finish_tiles_group, True):
-            self.check(True, 'new_level')
         else:
             self.check(True, 'restart_menu')
+
+        if pg.sprite.spritecollide(self.skin, finish_tiles_group, False):
+            self.check(True, 'new_level')
+
+
         if 0 < pg.time.get_ticks() - self.time_start > 500:
             self.mode = 'run'
             self.skin.rotate_skin(self.n, self.mode)
+
 
     def direction_of_movement(self, angle):
         if angle == 0:
@@ -76,5 +80,4 @@ class Player(pg.sprite.Sprite):
                 self.skin.rotate_skin(self.n, self.mode)
 
     def check(self, booll, name_menu):
-        print('as;dfj')
         self.menu_close_open = (booll, name_menu)

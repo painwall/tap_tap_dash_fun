@@ -39,7 +39,7 @@ class Play():
                     Tile(y, x)
                 if image.getpixel((y, x)) == PLAYER:
                     Tile(y, x)
-                    self.player = Player(y, x)
+                    self.player = Player(y, x, float(open(f'levels/{self.level}/speed.txt', encoding='ANSI').read()))
                 elif image.getpixel((y, x)) == UP_TILE:
                     Tile(y, x)
                     MoveUpTile(y, x)
@@ -74,22 +74,17 @@ class Play():
                 elif image.getpixel((y, x)) == FINISH_TILE:
                     FinishTile(y, x)
 
-        self.player.speed = float(open(f'levels/{self.level}/speed.txt', encoding='ANSI').read())
         self.play()
 
     def play(self):
         print(all_sprites)
         running = True
         while running:
-            print('123123')
             screen.fill((0, 198, 255))
-            print('123123')
             for event in pg.event.get():
                 player_group.update(event)
 
-            print('123123')
             self.player.move()
-            print('123123')
             self.player.skin.move(self.player.rect.x, self.player.rect.x)
             camera.update(self.player)
             for sprite in all_sprites:
@@ -97,11 +92,10 @@ class Play():
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()
-            print(self.player.menu_close_open, '123123123123123123')
             if self.player.menu_close_open[0] == True:
                 menu_close_open = self.player.menu_close_open
                 running = False
-        print('asdfasdfasdf')
+
         if menu_close_open[1] == 'restart_menu':
             from main.restart_menu import RestartMenu
             RestartMenu(self.level)
