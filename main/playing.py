@@ -1,7 +1,7 @@
 from PIL import Image
 import pygame as pg
 from main.objects.tiles import Tile, MoveUpTile, MoveDownTile, MoveLeftTile, MoveRightTile, JumpTile, FinishTile
-from main.window import camera, clock, screen, all_sprites
+from main.window import camera, screen, all_sprites, clock
 from main.objects.skin import skin_group
 from main.objects.player import player_group
 from main.delete_all_sprites import delete_all_sprites
@@ -92,6 +92,7 @@ class Play():
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()
+            clock.tick(120)
             if self.player.menu_close_open[0] == True:
                 menu_close_open = self.player.menu_close_open
                 running = False
@@ -100,10 +101,8 @@ class Play():
             from main.restart_menu import RestartMenu
             RestartMenu(self.level)
         elif menu_close_open[1] == 'new_level':
-            print(self.level, len(os.listdir('levels')))
             if int(self.level) >= len(os.listdir('levels')):
                 from main.level_menu import LevelMenu
                 LevelMenu()
             else:
-                print('fkfkkfkfkfkkfkfkkf')
                 Play(self.level + 1)

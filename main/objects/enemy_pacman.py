@@ -1,0 +1,2 @@
+class EnemyPacman:
+    pass
