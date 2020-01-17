@@ -9,12 +9,6 @@ DICT_DATA = {'playing': False, 'lvl_menu': False,
              'lvl': False, 'initial_menu': False,
              'restart_menu': False}
 
-PLAY = False
-LVL_MENU = False
-LVL = 0
-START_MENU = True
-MENU = False
-
 InitialMenu()
 
 while True:
