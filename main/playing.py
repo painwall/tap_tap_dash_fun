@@ -1,7 +1,8 @@
 from PIL import Image
 import pygame as pg
 from main.objects.tiles import Tile, MoveUpTile, MoveDownTile, MoveLeftTile, MoveRightTile, JumpTile, FinishTile
-from main.window import camera, screen, all_sprites, clock
+from main.window import screen, all_sprites, clock
+from main.objects.camera import Camera
 from main.objects.skin import skin_group
 from main.objects.player import player_group
 from main.delete_all_sprites import delete_all_sprites
@@ -24,6 +25,7 @@ RIGHT_JUMP_TILE = (153, 217, 234, 255)
 class Play():
     def __init__(self, level):
         print(level, 'level')
+        self.camera = Camera()
         self.level = level
         self.generate_level()
 
@@ -86,9 +88,9 @@ class Play():
 
             self.player.move()
             self.player.skin.move(self.player.rect.x, self.player.rect.x)
-            camera.update(self.player)
+            self.camera.update(self.player)
             for sprite in all_sprites:
-                camera.apply(sprite)
+                self.camera.apply(sprite)
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()

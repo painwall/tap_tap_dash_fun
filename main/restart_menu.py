@@ -22,6 +22,10 @@ class RestartMenu:
                     quit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     all_sprites.update(event)
+                if event.type == pg.KEYDOWN and event.key == 114:
+                    running = False
+                    menu_close_open = (0, 'btn_restart')
+
 
             if btn_get_lvl_menu.menu_close_open[0] == True:
                 print(btn_get_lvl_menu.menu_close_open, '')
@@ -41,4 +45,3 @@ class RestartMenu:
         elif menu_close_open[1] == 'btn_restart':
             from main.playing import Play
             Play(self.level)
-
