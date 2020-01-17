@@ -1,6 +1,4 @@
 import pygame as pg
-import random
-import os
 from main.window import clock, screen
 from main.initial_menu import InitialMenu
 # группы спрайтов и загрузка первыъ изображений

@@ -56,7 +56,7 @@ class Player(pg.sprite.Sprite):
             self.speed_y = 0
 
     def update(self, *args):
-        if args[0].type == pg.KEYUP:
+        if args[0].type == pg.KEYDOWN:
             if args[0].key == 273:
                 self.n = 0
                 self.direction_of_movement(0)
@@ -74,7 +74,7 @@ class Player(pg.sprite.Sprite):
                 self.direction_of_movement(270)
                 self.skin.rotate_skin(270, self.mode)
 
-            if args[0].key == 32:
+            if args[0].key == 32 and pg.sprite.spritecollideany(self.skin, tiles_group):
                 self.time_start = pg.time.get_ticks()
                 self.mode = 'fly'
                 self.skin.rotate_skin(self.n, self.mode)
