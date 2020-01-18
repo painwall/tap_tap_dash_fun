@@ -1,21 +1,19 @@
 import pygame as pg
 from main.window import all_sprites
-skin_group = pg.sprite.Group()
+from main.objects.animated_sprite import AnimatedSprite
+from main.objects.group_sprites import skin_group
 
-class Skin(pg.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__(skin_group, all_sprites)
-        self.start_image = pg.image.load('textures/bird.png')
-        self.start_image_fly = pg.image.load('textures/fly_bird.png')
-        self.image = pg.image.load('textures/bird.png')
+
+class Skin(AnimatedSprite):
+    def __init__(self, x, y, speed):
+        super().__init__(pg.image.load('textures/hero.png'), 9, 1, 64, 64,
+                         skin_group, all_sprites)
+
+        self.delay_animation = 100
+        self.time = 0
+        self.angle = 0
         self.rect = self.image.get_rect().move(x, y)
 
     def move(self, x, y):
         self.rect.x = x - 28
         self.rect.y = y - 128
-
-    def rotate_skin(self, n, mode):
-        if mode == 'run':
-            self.image = pg.transform.rotate(self.start_image, n)
-        elif mode == 'fly':
-            self.image = pg.transform.rotate(self.start_image_fly, n)

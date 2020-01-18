@@ -21,7 +21,7 @@ class Player(pg.sprite.Sprite):
         self.n = 0  # угол для class Skin
         self.direction_of_movement(0)
         self.menu_close_open = (False,)
-        self.skin = Skin(self.rect.x, self.rect.y)
+        self.skin = Skin(self.rect.x, self.rect.y, speed)
 
     def move(self):
         print(self.menu_close_open)
@@ -58,26 +58,25 @@ class Player(pg.sprite.Sprite):
     def update(self, *args):
         if args[0].type == pg.KEYDOWN:
             if args[0].key == 273:
-                self.n = 0
                 self.direction_of_movement(0)
-                self.skin.rotate_skin(0, self.mode)
+                self.skin.angle = 0
             elif args[0].key == 274:
                 self.n = 180
                 self.direction_of_movement(180)
-                self.skin.rotate_skin(180, self.mode)
+                self.skin.angle = 180
             elif args[0].key == 276:
                 self.n = 90
                 self.direction_of_movement(90)
-                self.skin.rotate_skin(90, self.mode)
+                self.skin.angle = 90
             elif args[0].key == 275:
                 self.n = 270
                 self.direction_of_movement(270)
-                self.skin.rotate_skin(270, self.mode)
+                self.skin.angle = 270
 
             if args[0].key == 32 and pg.sprite.spritecollideany(self.skin, tiles_group):
                 self.time_start = pg.time.get_ticks()
                 self.mode = 'fly'
-                self.skin.rotate_skin(self.n, self.mode)
+                # self.skin.rotate_skin(self.n, self.mode)
 
     def check(self, booll, name_menu):
         self.menu_close_open = (booll, name_menu)

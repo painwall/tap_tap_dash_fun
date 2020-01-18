@@ -3,6 +3,7 @@ from main.objects.buttons import ButtonGetLevel, ButtonGetStartMenu
 from main.window import clock, screen, all_sprites
 from main.objects.cursor import Cursor
 from main.delete_all_sprites import delete_all_sprites
+import traceback
 import os
 
 
@@ -44,7 +45,8 @@ class LevelMenu:
                 from main.initial_menu import InitialMenu
                 InitialMenu()
             elif menu_close_open[1] == 'play':
+                print('запуск игры', menu_close_open)
                 from main.playing import Play
                 Play(menu_close_open[2])
         except BaseException:
-            pass
+            print('Ошибка:\n', traceback.format_exc())

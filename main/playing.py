@@ -22,7 +22,7 @@ DOWN_JUMP_TILE = (239, 228, 176, 255)
 LEFT_JUMP_TILE = (181, 230, 29, 255)
 RIGHT_JUMP_TILE = (153, 217, 234, 255)
 
-class Play():
+class Play:
     def __init__(self, level):
         print(level, 'level')
         self.camera = Camera()
@@ -75,7 +75,6 @@ class Play():
                     MoveUpTile(y, x)
                 elif image.getpixel((y, x)) == FINISH_TILE:
                     FinishTile(y, x)
-
         self.play()
 
     def play(self):
@@ -91,6 +90,7 @@ class Play():
             self.camera.update(self.player)
             for sprite in all_sprites:
                 self.camera.apply(sprite)
+            self.player.skin.update(pg.time.get_ticks())
             all_sprites.draw(screen)
             skin_group.draw(screen)
             pg.display.flip()

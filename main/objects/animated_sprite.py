@@ -1,9 +1,10 @@
 import pygame as pg
 from main.window import all_sprites
-
+from main.objects.group_sprites import skin_group
+from main.window import clock
 class AnimatedSprite(pg.sprite.Sprite):
-    def __init__(self, sheet, columns, rows, x, y):
-        super().__init__(all_sprites)
+    def __init__(self, sheet, columns, rows, x, y, *group):
+        super().__init__(group)
         self.frames = []
         self.cut_sheet(sheet, columns, rows)
         self.cur_frame = 0
@@ -19,6 +20,13 @@ class AnimatedSprite(pg.sprite.Sprite):
                 self.frames.append(sheet.subsurface(pg.Rect(
                     frame_location, self.rect.size)))
 
-    def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
-        self.image = self.frames[self.cur_frame]
+    def update(self, time=None, angle=None):
+        # обновление картинок
+        try:# используется для создания задержки в анимации
+            if time - self.time >= self.delay_animation:
+                self.time = time
+                self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+                self.image = pg.transform.rotate(self.frames[self.cur_frame], self.angle)
+        except BaseException:
+            self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+            self.image = self.frames[self.cur_frame]
