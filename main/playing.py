@@ -95,9 +95,9 @@ class Play:
                 self.camera.apply(sprite)
             self.player.skin.update(pg.time.get_ticks())
             all_sprites.draw(screen)
-            skin_group.draw(screen)
             clock_group.update()
             clock_group.draw(screen)
+            skin_group.draw(screen)
             pg.display.flip()
             clock.tick(120)
             if self.player.menu_close_open[0] == True:

@@ -32,7 +32,7 @@ class AnimatedSprite(pg.sprite.Sprite):
         print(self.cur_frame)
         # обновление картинок
         try:# используется для создания задержки в анимации
-            if time - self.time >= self.delay_animation:
+            if time - self.time >= self.delay_animation[self.row]:
                 self.time = time
                 self.cur_frame = (self.cur_frame + 1) % len(self.frames[self.row])
                 self.image = pg.transform.rotate(self.frames[self.row][self.cur_frame], self.angle)

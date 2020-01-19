@@ -15,16 +15,21 @@ class Player(pg.sprite.Sprite):
         tile_width = tile_height = 64
         self.image = player_image
         self.speed = speed
-        self.rect = self.image.get_rect().move(tile_width * pos_x + 28, tile_height * pos_y + 28)
+        self.rect = self.image.get_rect().move(tile_width * pos_x + 14, tile_height * pos_y + 14)
         self.mode = 'run'
-        self.time_start = pg.time.get_ticks()
-        self.n = 0  # угол для class Skin
+
+        self.time_start = 0
+        self.time_fly = 533 / speed * 2
+        print('time_fly', self.time_fly)
         self.direction_of_movement(0)
         self.menu_close_open = (False,)
-        self.skin = Skin(self.rect.x, self.rect.y, speed)
+        self.skin = Skin(self.rect.x, self.rect.y, speed, self.time_fly)
 
     def move(self):
-        if pg.sprite.spritecollideany(self.skin, tiles_group) or 0 < pg.time.get_ticks() - self.time_start <= 500:
+        print(pg.sprite.spritecollide(self.skin, tiles_group, False))
+        if pg.sprite.spritecollideany(self,
+                                      tiles_group) or pg.time.get_ticks() - self.time_start <= self.time_fly:
+            print(pg.time.get_ticks() - self.time_start, 'check')
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
         else:
@@ -33,11 +38,9 @@ class Player(pg.sprite.Sprite):
         if pg.sprite.spritecollide(self.skin, finish_tiles_group, False):
             self.check(True, 'new_level')
 
-
         if 0 < pg.time.get_ticks() - self.time_start > 500:
             self.mode = 'run'
             self.skin.edit_row(0)
-
 
     def direction_of_movement(self, angle):
         if angle == 0:
