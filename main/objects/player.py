@@ -24,8 +24,6 @@ class Player(pg.sprite.Sprite):
         self.skin = Skin(self.rect.x, self.rect.y, speed)
 
     def move(self):
-        print(self.menu_close_open)
-
         if pg.sprite.spritecollideany(self.skin, tiles_group) or 0 < pg.time.get_ticks() - self.time_start <= 500:
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
@@ -38,7 +36,7 @@ class Player(pg.sprite.Sprite):
 
         if 0 < pg.time.get_ticks() - self.time_start > 500:
             self.mode = 'run'
-            self.skin.rotate_skin(self.n, self.mode)
+            self.skin.edit_row(0)
 
 
     def direction_of_movement(self, angle):
@@ -76,7 +74,7 @@ class Player(pg.sprite.Sprite):
             if args[0].key == 32 and pg.sprite.spritecollideany(self.skin, tiles_group):
                 self.time_start = pg.time.get_ticks()
                 self.mode = 'fly'
-                # self.skin.rotate_skin(self.n, self.mode)
+                self.skin.edit_row(1)
 
     def check(self, booll, name_menu):
         self.menu_close_open = (booll, name_menu)
