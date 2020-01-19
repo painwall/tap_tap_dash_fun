@@ -7,6 +7,8 @@ from main.objects.skin import skin_group
 from main.objects.player import player_group
 from main.delete_all_sprites import delete_all_sprites
 from main.objects.player import Player
+from main.objects.timer import Timer
+from main.objects.group_sprites import clock_group
 import os
 
 PLAYER = (237, 28, 36, 255)
@@ -26,6 +28,7 @@ class Play:
     def __init__(self, level):
         print(level, 'level')
         self.camera = Camera()
+        self.timer = Timer(50, 50)
         self.level = level
         self.generate_level()
 
@@ -93,6 +96,8 @@ class Play:
             self.player.skin.update(pg.time.get_ticks())
             all_sprites.draw(screen)
             skin_group.draw(screen)
+            clock_group.update()
+            clock_group.draw(screen)
             pg.display.flip()
             clock.tick(120)
             if self.player.menu_close_open[0] == True:

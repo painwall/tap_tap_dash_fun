@@ -4,6 +4,7 @@ from main.objects.buttons import ButtonGetLevelMenu, ButtonGetSkins
 from main.delete_all_sprites import delete_all_sprites
 
 
+
 class InitialMenu:
     def __init__(self):
         delete_all_sprites()
@@ -11,7 +12,6 @@ class InitialMenu:
             ButtonGetLevelMenu(300, 275)
         self.btn_get_skins = \
             ButtonGetSkins(350, 325)
-
         self.run()
 
     def run(self):
@@ -30,10 +30,12 @@ class InitialMenu:
             if self.btn_get_lvl_menu.menu_close_open[0] == True:
                 menu_close_open = self.btn_get_lvl_menu.menu_close_open
                 running = False
+                print(menu_close_open)
 
         try:
-            from main.level_menu import LevelMenu
-            LevelMenu()
+            if menu_close_open[1] == 'btn_get_lvl_menu':
+                from main.level_menu import LevelMenu
+                LevelMenu()
 
         except IndexError:
             print('ошибка')

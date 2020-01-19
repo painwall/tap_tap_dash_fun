@@ -106,9 +106,6 @@ class ButtonGetSkins(pg.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-    def click(self):
-        self.image = pg.image.load()
-
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
         y = pg.mouse.get_pos()[1]
@@ -128,8 +125,6 @@ class ButtonRestart(pg.sprite.Sprite):
         self.rect.y = y
 
     def update(self, *args):
-        global PLAY
-        global MENU
         x = pg.mouse.get_pos()[0]
         y = pg.mouse.get_pos()[1]
         if self.rect.x <= x <= self.rect.x + self.rect.width \
