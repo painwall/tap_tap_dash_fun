@@ -1,7 +1,8 @@
 from PIL import Image
 import pygame as pg
 from main.objects.tiles import Tile, MoveUpTile, MoveDownTile, MoveLeftTile, MoveRightTile, JumpTile, FinishTile
-from main.window import screen, all_sprites, clock
+from main.window import screen, clock
+from main.objects.group_sprites import all_sprites
 from main.objects.camera import Camera
 from main.objects.skin import skin_group
 from main.objects.player import player_group

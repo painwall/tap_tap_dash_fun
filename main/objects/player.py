@@ -1,7 +1,8 @@
 import pygame as pg
 from main.objects.tiles import tiles_group, finish_tiles_group
 from main.objects.skin import Skin
-from main.window import all_sprites
+from main.objects.group_sprites import all_sprites
+
 
 player_group = pg.sprite.Group()
 # player_image = pg.image.load('textures/player.png')

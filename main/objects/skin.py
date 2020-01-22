@@ -1,5 +1,6 @@
 import pygame as pg
-from main.window import all_sprites
+from main.objects.group_sprites import all_sprites
+
 from main.objects.animated_sprite import AnimatedSprite
 from main.objects.group_sprites import skin_group
 

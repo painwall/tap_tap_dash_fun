@@ -1,5 +1,6 @@
 import pygame as pg
-from main.window import all_sprites
+from main.objects.group_sprites import all_sprites
+
 
 
 class ButtonGetLevel(pg.sprite.Sprite):

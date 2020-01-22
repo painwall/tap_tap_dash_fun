@@ -1,5 +1,6 @@
 import pygame as pg
-from main.window import screen, all_sprites, clock
+from main.window import screen, clock
+from main.objects.group_sprites import all_sprites
 from main.objects.buttons import ButtonGetLevelMenu, ButtonRestart
 from main.delete_all_sprites import delete_all_sprites
 

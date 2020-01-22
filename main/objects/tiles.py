@@ -1,5 +1,6 @@
 import pygame as pg
-from main.window import all_sprites
+from main.objects.group_sprites import all_sprites
+
 
 tiles_group = pg.sprite.Group()
 finish_tiles_group = pg.sprite.Group()
