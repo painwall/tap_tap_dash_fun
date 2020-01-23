@@ -14,6 +14,6 @@ class Cursor:
             pass
         obj.rect.y += self.dy
 
-    def update(self, target):
+    def update(self, target, n=-75):
         self.dx = -(target.rect.x + target.rect.w // 2 - WIN_WIDTH // 2)
-        self.dy = -(target.rect.y + target.rect.h // 2 - WIN_HEIGHT // 2 - 75)
+        self.dy = -(target.rect.y + target.rect.h // 2 - WIN_HEIGHT // 2 + n)

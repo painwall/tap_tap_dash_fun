@@ -1,11 +1,4 @@
-import pygame as pg
+import time
 
-sc = pg.display.set_mode((300, 300))
-while True:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            quit()
-
-        print(event)
-
-
+a = '00:00:30:300'
+print(time.strptime(a, ''))

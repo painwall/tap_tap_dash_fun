@@ -29,11 +29,9 @@ class RestartMenu:
 
 
             if btn_get_lvl_menu.menu_close_open[0] == True:
-                print(btn_get_lvl_menu.menu_close_open, '')
                 menu_close_open = btn_get_lvl_menu.menu_close_open
                 running = False
             elif btn_restart.menu_close_open[0] == True:
-                print('net')
                 menu_close_open = btn_restart.menu_close_open
                 running = False
 

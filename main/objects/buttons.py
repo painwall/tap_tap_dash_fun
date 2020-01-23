@@ -90,17 +90,27 @@ class ButtonGetLevelMenu(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.speed = 3
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
         y = pg.mouse.get_pos()[1]
-        if self.rect.x <= x <= self.rect.x + self.rect.width \
-                and self.rect.y <= y <= self.rect.y + self.rect.height:
-            self.image = self.final_image
-            self.check()
+        if args[0] and args[0].type == pg.MOUSEBUTTONDOWN:
+            if args[0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
+                    and self.rect.y <= y <= self.rect.y + self.rect.height:
+                self.image = self.final_image
+                self.check()
+            elif args[0].button == 5:
+                self.move(self.speed)
+            elif args[0].button == 4:
+                self.move(-self.speed)
 
     def check(self):
         self.menu_close_open = (True, 'btn_get_lvl_menu')
+
+    def move(self, speed):
+        self.rect.y += speed
+
 
 
 class ButtonGetSkins(pg.sprite.Sprite):
