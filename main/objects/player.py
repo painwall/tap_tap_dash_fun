@@ -21,16 +21,13 @@ class Player(pg.sprite.Sprite):
 
         self.time_start = 0
         self.time_fly = 533 / speed * 2
-        print('time_fly', self.time_fly)
         self.direction_of_movement(0)
         self.menu_close_open = (False,)
         self.skin = Skin(self.rect.x, self.rect.y, speed, self.time_fly)
 
     def move(self):
-        print(pg.sprite.spritecollide(self.skin, tiles_group, False))
         if pg.sprite.spritecollideany(self,
                                       tiles_group) or pg.time.get_ticks() - self.time_start <= self.time_fly:
-            print(pg.time.get_ticks() - self.time_start, 'check')
             self.rect.y += self.speed_y
             self.rect.x += self.speed_x
         else:
@@ -81,4 +78,5 @@ class Player(pg.sprite.Sprite):
                 self.skin.edit_row(1)
 
     def check(self, booll, name_menu):
+        print(name_menu)
         self.menu_close_open = (booll, name_menu)

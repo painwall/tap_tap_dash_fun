@@ -27,7 +27,6 @@ RIGHT_JUMP_TILE = (153, 217, 234, 255)
 
 class Play:
     def __init__(self, level):
-        print(level, 'level')
         self.camera = Camera()
         self.timer = Timer(50, 50)
         self.level = level
@@ -82,7 +81,6 @@ class Play:
         self.play()
 
     def play(self):
-        print(all_sprites)
         running = True
         while running:
             screen.fill((0, 198, 255))
@@ -113,4 +111,6 @@ class Play:
                 from main.level_menu import LevelMenu
                 LevelMenu()
             else:
+                with open('levels.txt', mode='a', encoding='ANSI') as txt:
+                    txt.write(f' {self.level + 1}')
                 Play(self.level + 1)

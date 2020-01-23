@@ -46,7 +46,6 @@ class LevelMenu:
                 from main.initial_menu import InitialMenu
                 InitialMenu()
             elif menu_close_open[1] == 'play':
-                print('запуск игры', menu_close_open)
                 from main.playing import Play
                 Play(menu_close_open[2])
         except BaseException:

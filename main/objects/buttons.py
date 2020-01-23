@@ -7,9 +7,17 @@ class ButtonGetLevel(pg.sprite.Sprite):
     def __init__(self, pos_x, pos_y, number):
         super().__init__(all_sprites)
         pg.font.init()
+        self.flag = None
+        with open('levels.txt') as txt:
+            if str(number) in txt.read().split():
+                self.color = (255, 255, 255)
+                self.flag = True
+            else:
+                self.flag = False
+                self.color = (255, 0, 0)
         surf = pg.Surface((50, 50))
         surf.fill((0, 198, 255))
-        pg.draw.circle(surf, (255, 255, 255), (25, 25), 25)
+        pg.draw.circle(surf, self.color, (25, 25), 25)
         font = pg.font.SysFont('arial', 16)
         text = font.render(f'{number}', 1, (7, 85, 30))
         surf.blit(text, (int((50 - text.get_width()) / 2), 15))
@@ -29,7 +37,7 @@ class ButtonGetLevel(pg.sprite.Sprite):
         y = pg.mouse.get_pos()[1]
         if args and args[0].type == pg.MOUSEBUTTONDOWN and args[
             0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
-                and self.rect.y <= y <= self.rect.y + self.rect.height:
+                and self.rect.y <= y <= self.rect.y + self.rect.height and self.flag:
             self.image = self.final_image
             self.check()
 
@@ -84,9 +92,6 @@ class ButtonGetLevelMenu(pg.sprite.Sprite):
         self.rect.y = y
 
     def update(self, *args):
-        global LVL_MENU
-        global START_MENU
-        global MENU
         x = pg.mouse.get_pos()[0]
         y = pg.mouse.get_pos()[1]
         if self.rect.x <= x <= self.rect.x + self.rect.width \
