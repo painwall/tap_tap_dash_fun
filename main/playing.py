@@ -11,6 +11,7 @@ from main.objects.player import Player
 from main.objects.timer import Timer
 from main.objects.group_sprites import clock_group
 import os
+from main.objects.add_in_statistics import add_in_statistics
 
 PLAYER = (237, 28, 36, 255)
 RIGHT_TILE = (0, 162, 232, 255)
@@ -24,6 +25,7 @@ UP_JUMP_TILE = (255, 201, 14, 255)
 DOWN_JUMP_TILE = (239, 228, 176, 255)
 LEFT_JUMP_TILE = (181, 230, 29, 255)
 RIGHT_JUMP_TILE = (153, 217, 234, 255)
+
 
 class Play:
     def __init__(self, level):
@@ -111,6 +113,9 @@ class Play:
                 from main.level_menu import LevelMenu
                 LevelMenu()
             else:
+                add_in_statistics('travel', ('level', 'travel_time'), (self.level, f'{self.timer.time // 60000}:{self.timer.time // 1000}:{self.timer.time % 1000}'))
                 with open('levels.txt', mode='a', encoding='ANSI') as txt:
                     txt.write(f' {self.level + 1}')
                 Play(self.level + 1)
+
+

@@ -7,7 +7,7 @@ from main.objects.group_sprites import skin_group
 
 class Skin(AnimatedSprite):
     def __init__(self, x, y, speed, time_fly):
-        super().__init__([pg.image.load('textures/hero_run.png'),pg.image.load('textures/hero_fly.png')],
+        super().__init__([pg.image.load('textures/hero_run.png'), pg.image.load('textures/hero_fly.png')],
                          (9, 7), (1, 1), 64, 64,
                          skin_group, all_sprites)
 

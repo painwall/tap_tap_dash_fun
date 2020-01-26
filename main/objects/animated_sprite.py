@@ -29,7 +29,6 @@ class AnimatedSprite(pg.sprite.Sprite):
             self.cur_frame = 0
 
     def update(self, time=None, angle=None):
-        print(self.cur_frame)
         # обновление картинок
         try:# используется для создания задержки в анимации
             if time - self.time >= self.delay_animation[self.row]:

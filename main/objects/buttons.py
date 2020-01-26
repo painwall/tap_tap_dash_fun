@@ -2,7 +2,6 @@ import pygame as pg
 from main.objects.group_sprites import all_sprites
 
 
-
 class ButtonGetLevel(pg.sprite.Sprite):
     def __init__(self, pos_x, pos_y, number):
         super().__init__(all_sprites)
@@ -30,7 +29,6 @@ class ButtonGetLevel(pg.sprite.Sprite):
         self.final_image = surf_final
         self.rect = self.image.get_rect().move(pos_x * 60, pos_y)
         self.menu_close_open = (False,)
-        print('все норм')
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
@@ -40,9 +38,13 @@ class ButtonGetLevel(pg.sprite.Sprite):
                 and self.rect.y <= y <= self.rect.y + self.rect.height and self.flag:
             self.image = self.final_image
             self.check()
+        elif args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 3 \
+                and self.rect.x <= x <= self.rect.x + self.rect.width \
+                and self.rect.y <= y <= self.rect.y + self.rect.height:
+            self.check(mode='statistics')
 
-    def check(self):
-        self.menu_close_open = (True, 'play', self.level)
+    def check(self, mode='play'):
+        self.menu_close_open = (True, mode, self.level)
 
 
 class ButtonGetStartMenu(pg.sprite.Sprite):
@@ -51,31 +53,22 @@ class ButtonGetStartMenu(pg.sprite.Sprite):
         self.image = pg.image.load('textures/btn_menu_start.png')
         self.final_image = pg.image.load('textures/btn_menu_final.png')
         self.rect = self.image.get_rect().move(pos_x, pos_y)
-        self.speed_x = 1
         self.menu_close_open = (False,)
-        self.end_coord_x = self.rect.x
-
-    def move(self):
-        if self.end_coord_x > self.rect.x:
-            self.rect.x += self.speed_x
-        elif self.end_coord_x < self.rect.x:
-            self.rect.x -= self.speed_x
+        self.speed = 20
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
         y = pg.mouse.get_pos()[1]
 
-        if args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 3:
-            self.end_coord_x = pg.mouse.get_pos()[0]
         if args and args[0].type == pg.MOUSEBUTTONDOWN and args[
             0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
             self.image = self.final_image
             self.check()
-        if args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 4 and self.speed_x <= 5:
-            self.speed_x += 1
-        elif args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 5 and self.speed_x > 0:
-            self.speed_x -= 1
+        if args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 4:
+            self.rect.x += self.speed
+        elif args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 5:
+            self.rect.x -= self.speed
 
     def check(self):
         self.menu_close_open = (True, 'initial_menu')
@@ -90,7 +83,7 @@ class ButtonGetLevelMenu(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.speed = 3
+        self.speed = 15
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
@@ -110,7 +103,6 @@ class ButtonGetLevelMenu(pg.sprite.Sprite):
 
     def move(self, speed):
         self.rect.y += speed
-
 
 
 class ButtonGetSkins(pg.sprite.Sprite):

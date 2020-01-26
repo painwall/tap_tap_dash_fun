@@ -31,7 +31,6 @@ class InitialMenu:
             if self.btn_get_lvl_menu.menu_close_open[0] == True:
                 menu_close_open = self.btn_get_lvl_menu.menu_close_open
                 running = False
-                print(menu_close_open)
 
         try:
             if menu_close_open[1] == 'btn_get_lvl_menu':

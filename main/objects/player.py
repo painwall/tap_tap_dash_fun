@@ -78,5 +78,6 @@ class Player(pg.sprite.Sprite):
                 self.skin.edit_row(1)
 
     def check(self, booll, name_menu):
-        print(name_menu)
         self.menu_close_open = (booll, name_menu)
+
+

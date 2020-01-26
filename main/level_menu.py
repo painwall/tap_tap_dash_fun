@@ -22,14 +22,13 @@ class LevelMenu:
         running = True
         while running:
             screen.fill((0, 198, 255))
-            clock.tick(60)
+            # clock.tick(120)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     quit()
                 all_sprites.update(event)
 
             self.cur.update(self.btn_get_initial_menu)
-            self.btn_get_initial_menu.move()
             all_sprites.draw(screen)
             for sprite in all_sprites:
                 self.cur.apply(sprite)
@@ -47,6 +46,12 @@ class LevelMenu:
                 InitialMenu()
             elif menu_close_open[1] == 'play':
                 from main.playing import Play
+                print(menu_close_open[2])
                 Play(menu_close_open[2])
+
+            elif menu_close_open[1] == 'statistics':
+                from main.statistics_menu import StatisticsMenu
+                print(menu_close_open)
+                StatisticsMenu(menu_close_open[2])
         except BaseException:
             print('Ошибка:\n', traceback.format_exc())
