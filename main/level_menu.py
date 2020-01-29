@@ -15,7 +15,7 @@ class LevelMenu:
                             range(len(os.listdir('levels')))]
 
         self.cur = Cursor()
-        self.btn_get_initial_menu = ButtonGetStartMenu(0, 300)
+        self.btn_get_initial_menu = ButtonGetStartMenu(0, 300, move=True, speed_x=15)
         self.run()
 
     def run(self):

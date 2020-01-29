@@ -9,7 +9,7 @@ import sqlite3
 class StatisticsMenu:
     def __init__(self, level):
         delete_all_sprites()
-        self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550)
+        self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550, move=True, speed_y=15)
         self.level = level
         pg.font.init()
         self.cursor = Cursor()
