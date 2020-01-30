@@ -1,5 +1,6 @@
 import pygame as pg
 from main.objects.group_sprites import all_sprites
+import sqlite3
 
 
 class Button(pg.sprite.Sprite):
@@ -125,3 +126,37 @@ class ButtonRestart(Button):
 
     def check(self):
         self.menu_close_open = (True, 'btn_restart')
+
+
+class ButtonYourAccount(Button):
+    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+        super().__init__(pos_x, pos_y,
+                         'textures/account_add.png',
+                         'textures/account_add.png',
+                         (all_sprites,))
+        self.move = move
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+
+    def check(self):
+        self.menu_close_open = (True, 'btn_account')
+
+
+class ButtonAccount(pg.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, id):
+        super().__init__(all_sprites)
+        surf = pg.Surface((100, 50))
+        self.id = id
+        self.return_name()
+        pg.font.init()
+        pg.draw.rect(surf, (255, 255, 255), (0, 0, 100, 50))
+        font = pg.font.SysFont('arial', 16)
+        text = font.render(f'{self.name}', 1, (7, 85, 30))
+        surf.blit(text, (int((50 - text.get_width()) / 2), 15))
+        self.image = surf
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
+
+    def return_name(self):
+        con = sqlite3.connect('data/accounts/accounts.db')
+        cur = con.cursor()
+        self.name = cur.execute(f'SELECT name FROM accounts WHICH id = {self.id}').fetchone()[0]
