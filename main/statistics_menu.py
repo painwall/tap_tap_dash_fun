@@ -21,7 +21,7 @@ class StatisticsMenu:
 
 
     def get_text(self):
-        con = sqlite3.connect('statistics.db')
+        con = sqlite3.connect('data/statistics.db')
         cur = con.cursor()
         self.times = cur.execute(f'SELECT travel_time FROM travel WHERE level == {self.level}').fetchall()
         self.times = set(map(lambda x: (x[0], int(''.join(x[0].split(':')))), self.times))
