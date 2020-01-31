@@ -143,11 +143,11 @@ class ButtonYourAccount(Button):
 
 
 class ButtonAccount(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, id):
+    def __init__(self, pos_x, pos_y, id, name):
         super().__init__(all_sprites)
         surf = pg.Surface((100, 50))
         self.id = id
-        self.return_name()
+        self.name = name
         pg.font.init()
         pg.draw.rect(surf, (255, 255, 255), (0, 0, 100, 50))
         font = pg.font.SysFont('arial', 16)
@@ -156,7 +156,6 @@ class ButtonAccount(pg.sprite.Sprite):
         self.image = surf
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
-    def return_name(self):
-        con = sqlite3.connect('data/accounts/accounts.db')
-        cur = con.cursor()
-        self.name = cur.execute(f'SELECT name FROM accounts WHICH id = {self.id}').fetchone()[0]
+class CreateNewAccount(Button, ):
+    def __init__(self):
+        super().__init__()
