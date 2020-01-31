@@ -2,8 +2,7 @@ import sqlite3
 
 
 class Account:
-    def __init__(self, id):
-        self.id = id
+    def __init__(self):
         self.con = sqlite3.connect('data/accounts/accounts.db')
         self.cur = self.con.cursor()
         self.get_list_accounts()
@@ -11,7 +10,6 @@ class Account:
     def log_in(self, id):
         with open('data/accounts/accounts.db', mode='w') as txt:
             txt.write(str(id))
-        self.id = id
 
     def delete_account(self):
         pass
@@ -21,6 +19,11 @@ class Account:
 
     def get_list_accounts(self):
         self.list_accounts = self.cur.execute('SELECT * FROM accounts').fetchall()
+        return self.list_accounts
 
     def create_new_account(self, name):
-        self.cur.execute(f'INSERT INTO accounts (name) values({name})')
+        print(name)
+        # self.cur.execute(f'INSERT INTO accounts (account_name) VALUES({name})')
+        self.cur.execute(f'INSERT INTO accounts (account_name) VALUES ({str(name)})')
+        self.con.commit()
+        # print(f'INSERT INTO accounts (name) values({name})')

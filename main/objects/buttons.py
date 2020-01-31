@@ -1,5 +1,6 @@
 import pygame as pg
 from main.objects.group_sprites import all_sprites
+from main.objects.account import Account
 import sqlite3
 
 
@@ -23,6 +24,7 @@ class Button(pg.sprite.Sprite):
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
             self.image = self.final_image
             self.check()
+            self.run()
         if self.move and args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 4:
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
@@ -31,6 +33,9 @@ class Button(pg.sprite.Sprite):
             self.rect.y -= self.speed_y
 
     def check(self):
+        pass
+
+    def run(self):
         pass
 
 
@@ -143,8 +148,8 @@ class ButtonYourAccount(Button):
 
 
 class ButtonAccount(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, id, name):
-        super().__init__(all_sprites)
+    def __init__(self, pos_x, pos_y, id, name, groups):
+        super().__init__(groups)
         surf = pg.Surface((100, 50))
         self.id = id
         self.name = name
@@ -156,6 +161,18 @@ class ButtonAccount(pg.sprite.Sprite):
         self.image = surf
         self.rect = self.image.get_rect().move(pos_x, pos_y)
 
-class CreateNewAccount(Button, ):
-    def __init__(self):
-        super().__init__()
+
+class ButtonCreateNewAccount(Button, Account):
+    def __init__(self, pos_x, pos_y, name, groups):
+        Button.__init__(self, pos_x, pos_y,
+                        'textures/create_account.png',
+                        'textures/create_account.png',
+                        groups)
+        Account.__init__(self)
+        self.name = name
+
+    def run(self):
+        try:
+            self.create_new_account(self.name)
+        except sqlite3.OperationalError:
+            print('Аккаунт не был создан')
