@@ -147,12 +147,11 @@ class ButtonYourAccount(Button):
         self.menu_close_open = (True, 'btn_account')
 
 
-class ButtonAccount(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, id, name, groups):
-        super().__init__(groups)
+class ButtonAccount(pg.sprite.Sprite, Account):
+    def __init__(self, pos_x, pos_y, id_account, name_account, groups):
+        pg.sprite.Sprite.__init__(self, groups)
+        Account.__init__(self, id_account=id_account, name=name_account)
         surf = pg.Surface((100, 50))
-        self.id = id
-        self.name = name
         pg.font.init()
         pg.draw.rect(surf, (255, 255, 255), (0, 0, 100, 50))
         font = pg.font.SysFont('arial', 16)
@@ -160,19 +159,38 @@ class ButtonAccount(pg.sprite.Sprite):
         surf.blit(text, (int((50 - text.get_width()) / 2), 15))
         self.image = surf
         self.rect = self.image.get_rect().move(pos_x, pos_y)
+        self.menu_close_open = (False,)
+
+    def update(self, *args):
+        x = pg.mouse.get_pos()[0]
+        y = pg.mouse.get_pos()[1]
+
+        if args and args[0].type == pg.MOUSEBUTTONDOWN and args[
+            0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
+                and self.rect.y <= y <= self.rect.y + self.rect.height:
+            self.check()
+
+    def check(self):
+        self.menu_close_open = (True, 'log_in')
+        print(f'Вход в аккаунт с id ={self.id}')
 
 
 class ButtonCreateNewAccount(Button, Account):
-    def __init__(self, pos_x, pos_y, name, groups):
+    def __init__(self, pos_x, pos_y, name, groups, id):
         Button.__init__(self, pos_x, pos_y,
                         'textures/create_account.png',
                         'textures/create_account.png',
                         groups)
-        Account.__init__(self)
+        Account.__init__(self, id)
         self.name = name
 
     def run(self):
         try:
             self.create_new_account(self.name)
         except sqlite3.OperationalError:
+            import traceback
+            print(traceback.print_exc())
             print('Аккаунт не был создан')
+
+    def check(self):
+        self.menu_close_open = (True, 'create_new_account')

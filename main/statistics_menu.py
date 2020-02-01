@@ -3,7 +3,7 @@ from main.objects.buttons import ButtonGetLevelMenu
 from main.objects.group_sprites import all_sprites
 from main.delete_all_sprites import delete_all_sprites
 from main.window import screen
-from main.objects.cursor import Cursor
+from main.objects.scrollbar import Scrollbar
 import sqlite3
 
 class StatisticsMenu:
@@ -12,7 +12,7 @@ class StatisticsMenu:
         self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550, move=True, speed_y=15)
         self.level = level
         pg.font.init()
-        self.cursor = Cursor()
+        self.scrollbar = Scrollbar(790, 0, (all_sprites,), offset_y=True)
         self.font = pg.font.SysFont('arial', 16)
         self.times = []
         self.get_text()
@@ -43,9 +43,6 @@ class StatisticsMenu:
                     quit()
                 all_sprites.update(event)
             screen.fill((0, 198, 255))
-            self.cursor.update(self.btn_get_lvl_menu, n=-275)
-            for sprite in all_sprites:
-                self.cursor.apply(sprite)
             all_sprites.draw(screen)
             pg.display.flip()
 
