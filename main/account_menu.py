@@ -43,6 +43,7 @@ class AccountMenu:
                         btn_account.menu_close_open = (False,)
             if self.btn_create_new_account.menu_close_open[0]:
                 self.update_accounts()
+                self.btn_create_new_account.menu_close_open = (False,)
             if self.btn_get_start_menu.menu_close_open[0]:
                 menu_close_open = self.btn_get_start_menu.menu_close_open
                 running = False
@@ -57,9 +58,10 @@ class AccountMenu:
 
     def update_accounts(self):
         delete_all_sprites(groups=(accounts_group,))
-        self.list_btns_account = []
+        print(accounts_group, 'a')
         self.list_btns_account = [
             ButtonAccount(0, ind * 60 + self.number, self.account.get_list_accounts()[ind][0],
                           self.account.get_list_accounts()[ind][1], (accounts_group, offset_y_group,
                                                                      all_sprites))
             for ind in range(len(self.account.get_list_accounts()))]
+        print(accounts_group, 'b')
