@@ -9,6 +9,7 @@ class Scrollbar(pg.sprite.Sprite):
         self.offset_x = offset_x
         self.offset_y = offset_y
         self.groups_sprites = groups_sprites
+        print(self.groups_sprites)
         self.speed_x = 10
         self.speed_y = 10
         surf = pg.Surface((10, 10))
@@ -16,6 +17,7 @@ class Scrollbar(pg.sprite.Sprite):
 
     def update_sprites(self):
         for sprite_group in self.groups_sprites:
+            print(sprite_group.__class__)
             for sprite in sprite_group:
                 if self.offset_x:
                     sprite.rect.x += self.speed_x
