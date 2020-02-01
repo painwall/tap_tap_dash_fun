@@ -11,7 +11,7 @@ import sqlite3
 class StatisticsMenu:
     def __init__(self, level):
         delete_all_sprites()
-        self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550)
+        self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550, (all_sprites,))
         self.level = level
         self.scrollbar = Scrollbar(790, 0, (statistical_time_group,), offset_y=True)
         with open('data/accounts/id_account.txt') as txt:
@@ -48,7 +48,7 @@ class StatisticsMenu:
             statistical_time_group.draw(screen)
             pg.display.flip()
 
-            if self.btn_get_lvl_menu.menu_close_open[0] == True:
+            if self.btn_get_lvl_menu.menu_close_open[0]:
                 menu_close_open = self.btn_get_lvl_menu.menu_close_open
                 running = False
 

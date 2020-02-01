@@ -9,10 +9,10 @@ class InitialMenu:
     def __init__(self):
         delete_all_sprites()
         self.btn_get_lvl_menu = \
-            ButtonGetLevelMenu(300, 275)
+            ButtonGetLevelMenu(300, 275, (all_sprites,))
         self.btn_get_skins = \
-            ButtonGetSkins(350, 325)
-        self.button_your_account = ButtonYourAccount(700, 0)
+            ButtonGetSkins(350, 325, (all_sprites,))
+        self.button_your_account = ButtonYourAccount(700, 0, (all_sprites,))
         self.run()
 
     def run(self):

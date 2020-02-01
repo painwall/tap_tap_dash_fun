@@ -1,12 +1,11 @@
 import pygame as pg
-from main.objects.group_sprites import all_sprites
 from main.objects.account import Account
 import sqlite3
 
 
 class Button(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, image, final_image, groups_sprites):
-        super().__init__(groups_sprites)
+    def __init__(self, pos_x, pos_y, image, final_image, groups):
+        super().__init__(groups)
         self.image = pg.image.load(image)
         self.final_image = pg.image.load(final_image)
         self.rect = self.image.get_rect().move(pos_x, pos_y)
@@ -40,8 +39,8 @@ class Button(pg.sprite.Sprite):
 
 
 class ButtonGetLevel(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, number):
-        super().__init__(all_sprites)
+    def __init__(self, pos_x, pos_y, number, groups):
+        super().__init__(groups)
         pg.font.init()
         self.flag = None
         with open('levels.txt') as txt:
@@ -64,7 +63,7 @@ class ButtonGetLevel(pg.sprite.Sprite):
         pg.draw.circle(surf_final, (73, 67, 67), (25, 25), 25)
         surf_final.blit(text, (int((50 - text.get_width()) / 2), 15))
         self.final_image = surf_final
-        self.rect = self.image.get_rect().move(pos_x * 60, pos_y)
+        self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.menu_close_open = (False,)
 
     def update(self, *args):
@@ -85,9 +84,9 @@ class ButtonGetLevel(pg.sprite.Sprite):
 
 
 class ButtonGetStartMenu(Button):
-    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y, groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y, 'textures/btn_menu_start.png', 'textures/btn_menu_final.png',
-                         (all_sprites,))
+                         groups)
         self.move = move
         self.speed_x = speed_x
         self.speed_y = speed_y
@@ -97,9 +96,9 @@ class ButtonGetStartMenu(Button):
 
 
 class ButtonGetLevelMenu(Button):
-    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y, groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y, 'textures/btn_lvls_start.png',
-                         'textures/btn_lvls_final.png', (all_sprites,))
+                         'textures/btn_lvls_final.png', groups)
         self.move = move
         self.speed_x = speed_x
         self.speed_y = speed_y
@@ -109,22 +108,22 @@ class ButtonGetLevelMenu(Button):
 
 
 class ButtonGetSkins(Button):
-    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y,groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/btn_hero_start.png',
                          'textures/btn_hero_final.png',
-                         (all_sprites,))
+                         groups)
         self.move = move
         self.speed_x = speed_x
         self.speed_y = speed_y
 
 
 class ButtonRestart(Button):
-    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y,groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/btn_restart_start.png',
                          'textures/btn_restart_final.png',
-                         (all_sprites,))
+                         groups)
         self.move = move
         self.speed_x = speed_x
         self.speed_y = speed_y
@@ -134,11 +133,11 @@ class ButtonRestart(Button):
 
 
 class ButtonYourAccount(Button):
-    def __init__(self, pos_x, pos_y, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y,groups,move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/account_add.png',
                          'textures/account_add.png',
-                         (all_sprites,))
+                         groups)
         self.move = move
         self.speed_x = speed_x
         self.speed_y = speed_y

@@ -7,3 +7,6 @@ all_sprites = pg.sprite.Group()
 accounts_group = pg.sprite.Group()
 scrollbar_group = pg.sprite.Group()
 statistical_time_group = pg.sprite.Group()
+
+offset_x_group = pg.sprite.Group()
+offset_y_group = pg.sprite.Group()

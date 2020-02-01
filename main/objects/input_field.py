@@ -3,12 +3,12 @@ from main.objects.group_sprites import all_sprites
 
 
 class InputField(pg.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, groups):
+    def __init__(self, pos_x, pos_y, width, height, groups):
         super().__init__(groups)
         pg.font.init()
         self.font = pg.font.SysFont('arial', 16)
         self.text = ''
-        self.surf = pg.Surface((100, 50))
+        self.surf = pg.Surface((width, height))
         self.rect = self.surf.get_rect().move(pos_x, pos_y)
         self.surf.fill((255, 255, 255))
         self.image = self.surf

@@ -10,7 +10,7 @@ class Account:
         self.name = name
 
     def log_in(self):
-        with open('data/accounts/accounts.db', mode='w') as txt:
+        with open('data/accounts/id_account.txt', mode='w') as txt:
             txt.write(str(self.id))
 
     def delete_account(self):

@@ -12,8 +12,8 @@ class RestartMenu:
 
     def run(self):
         delete_all_sprites()
-        btn_get_lvl_menu = ButtonGetLevelMenu(300, 275)
-        btn_restart = ButtonRestart(300, 375)
+        btn_get_lvl_menu = ButtonGetLevelMenu(300, 275, (all_sprites,))
+        btn_restart = ButtonRestart(300, 375, (all_sprites,))
         running = True
         while running:
             screen.fill((0, 198, 255))
