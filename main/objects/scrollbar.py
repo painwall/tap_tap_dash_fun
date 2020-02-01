@@ -15,6 +15,7 @@ class Scrollbar(pg.sprite.Sprite):
         self.image = surf
 
     def update_sprites(self):
+        print(self.groups_sprites)
         for sprite_group in self.groups_sprites:
             for sprite in sprite_group:
                 if self.offset_x:

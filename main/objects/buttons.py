@@ -22,8 +22,8 @@ class Button(pg.sprite.Sprite):
             0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
             self.image = self.final_image
-            self.check()
             self.run()
+            self.check()
         if self.move and args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 4:
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
@@ -42,9 +42,16 @@ class ButtonGetLevel(pg.sprite.Sprite):
     def __init__(self, pos_x, pos_y, number, groups):
         super().__init__(groups)
         pg.font.init()
+        self.con = sqlite3.connect('data/accounts/accounts.db')
+        self.cur = self.con.cursor()
         self.flag = None
-        with open('levels.txt') as txt:
-            if str(number) in txt.read().split():
+        with open('data/accounts/id_account.txt') as txt:
+            id_account = int(txt.read())
+            print(self.cur.execute(f'SELECT pass_levels'
+                                        f' FROM accounts WHERE id={id_account}').fetchall())
+            if str(number) \
+                    in self.cur.execute(f'SELECT pass_levels'
+                                        f' FROM accounts WHERE id={id_account}').fetchall()[0][0].split(' '):
                 self.color = (255, 255, 255)
                 self.flag = True
             else:
@@ -108,7 +115,7 @@ class ButtonGetLevelMenu(Button):
 
 
 class ButtonGetSkins(Button):
-    def __init__(self, pos_x, pos_y,groups, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y, groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/btn_hero_start.png',
                          'textures/btn_hero_final.png',
@@ -119,7 +126,7 @@ class ButtonGetSkins(Button):
 
 
 class ButtonRestart(Button):
-    def __init__(self, pos_x, pos_y,groups, move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y, groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/btn_restart_start.png',
                          'textures/btn_restart_final.png',
@@ -133,7 +140,7 @@ class ButtonRestart(Button):
 
 
 class ButtonYourAccount(Button):
-    def __init__(self, pos_x, pos_y,groups,move=False, speed_x=0, speed_y=0):
+    def __init__(self, pos_x, pos_y, groups, move=False, speed_x=0, speed_y=0):
         super().__init__(pos_x, pos_y,
                          'textures/account_add.png',
                          'textures/account_add.png',

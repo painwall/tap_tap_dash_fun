@@ -101,7 +101,7 @@ class Play:
             skin_group.draw(screen)
             pg.display.flip()
             clock.tick(120)
-            if self.player.menu_close_open[0] == True:
+            if self.player.menu_close_open[0]:
                 menu_close_open = self.player.menu_close_open
                 running = False
 

@@ -24,5 +24,5 @@ class Account:
         return list_accounts
 
     def create_new_account(self, name):
-        self.cur.execute(f'INSERT INTO accounts (account_name) VALUES ({str(name)})')
+        self.cur.execute(f'INSERT INTO accounts (account_name, pass_levels) VALUES ({str(name)}, "0 1")')
         self.con.commit()
