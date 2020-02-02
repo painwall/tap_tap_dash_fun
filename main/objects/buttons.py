@@ -1,5 +1,6 @@
 import pygame as pg
 from main.objects.account import Account
+from main.objects.label import Label
 import sqlite3
 
 

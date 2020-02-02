@@ -6,6 +6,7 @@ from main.objects.buttons import ButtonAccount, ButtonCreateNewAccount, ButtonGe
 from main.objects.input_field import InputField
 from main.objects.group_sprites import all_sprites, accounts_group, offset_y_group
 from main.objects.scrollbar import Scrollbar
+from main.objects.label import Label
 
 
 class AccountMenu:
@@ -13,12 +14,14 @@ class AccountMenu:
         delete_all_sprites()
         self.number = 200
         self.account = Account(None)
-        self.input_field = InputField(250, 20, 300, 50, (offset_y_group, all_sprites))
+        self.input_field = InputField(250, 40, 300, 50, (offset_y_group, all_sprites))
         self.btn_create_new_account = \
-            ButtonCreateNewAccount(350, 80, self.input_field.text, (offset_y_group, all_sprites), None)
+            ButtonCreateNewAccount(350, 100, self.input_field.text, (offset_y_group, all_sprites), None)
         self.scrollbar = Scrollbar(790, 0, (offset_y_group,), offset_y=True)
         self.btn_get_start_menu = ButtonGetStartMenu(300, 550, (all_sprites,))
         self.index_btn_account = None
+        self.labels = {'field_new_account': Label((all_sprites, offset_y_group), (307.5, 10), (185, 20),
+                                                  text='Поле для ввода имени аккаунта:', background=(0, 198, 255))}
         self.update_accounts()
         self.run()
 
