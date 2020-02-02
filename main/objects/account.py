@@ -13,6 +13,10 @@ class Account:
         with open('data/accounts/id_account.txt', mode='w') as txt:
             txt.write(str(self.id))
 
+    def return_log_in_account(self):
+        with open('data/accounts/id_account.txt') as txt:
+            return int(txt.read())
+
     def delete_account(self):
         pass
 
@@ -24,5 +28,5 @@ class Account:
         return list_accounts
 
     def create_new_account(self, name):
-        self.cur.execute(f'INSERT INTO accounts (account_name, pass_levels) VALUES ({str(name)}, "0 1")')
+        self.cur.execute(f'INSERT INTO accounts (account_name, pass_levels) VALUES ("{name}", "0 1")')
         self.con.commit()

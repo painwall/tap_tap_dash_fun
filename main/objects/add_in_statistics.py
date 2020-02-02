@@ -23,10 +23,13 @@ def add_in_statistics(table, columns, values, id_ac=True):
 
 
 def add_pass_level(level):
-    con = sqlite3.connect('data/statistics.db')
+    con = sqlite3.connect('data/accounts/accounts.db')
     cur = con.cursor()
     with open('data/accounts/id_account.txt') as txt:
         id_account = int(txt.read())
-    pass_levels = cur.execute(f'SELECT pass_levels FROM accounts WHERE id={id_account}').fetchall()[0].split(' ')
+    pass_levels = cur.execute(f'SELECT pass_levels FROM accounts WHERE id={id_account}').fetchall()[0][0].split(' ')
     if str(level + 1) not in pass_levels:
-        pass_levels += f' {level + 1}'
+        pass_levels.append(str(level + 1))
+    pass_levels = ' '.join(pass_levels)
+    cur.execute(f'UPDATE accounts SET pass_levels = "{pass_levels}" WHERE id = {id_account}')
+    con.commit()

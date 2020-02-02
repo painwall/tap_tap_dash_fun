@@ -15,7 +15,7 @@ class AccountMenu:
         self.account = Account(None)
         self.input_field = InputField(250, 20, 300, 50, (offset_y_group, all_sprites))
         self.btn_create_new_account = \
-            ButtonCreateNewAccount(0, 60, self.input_field.text, (offset_y_group, all_sprites), None)
+            ButtonCreateNewAccount(350, 80, self.input_field.text, (offset_y_group, all_sprites), None)
         self.scrollbar = Scrollbar(790, 0, (offset_y_group,), offset_y=True)
         self.btn_get_start_menu = ButtonGetStartMenu(300, 550, (all_sprites,))
         self.index_btn_account = None
@@ -37,6 +37,7 @@ class AccountMenu:
                 self.btn_create_new_account.name = self.input_field.text
 
             for btn_account in self.list_btns_account:
+                btn_account.image_button()
                 if btn_account.menu_close_open[0]:
                     if btn_account.menu_close_open[1] == 'log_in':
                         btn_account.log_in()
@@ -58,10 +59,8 @@ class AccountMenu:
 
     def update_accounts(self):
         delete_all_sprites(groups=(accounts_group,))
-        print(accounts_group, 'a')
         self.list_btns_account = [
-            ButtonAccount(0, ind * 60 + self.number, self.account.get_list_accounts()[ind][0],
+            ButtonAccount(250, ind * 60 + self.number, self.account.get_list_accounts()[ind][0],
                           self.account.get_list_accounts()[ind][1], (accounts_group, offset_y_group,
                                                                      all_sprites))
             for ind in range(len(self.account.get_list_accounts()))]
-        print(accounts_group, 'b')

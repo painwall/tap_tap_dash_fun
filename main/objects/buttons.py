@@ -157,13 +157,12 @@ class ButtonAccount(pg.sprite.Sprite, Account):
     def __init__(self, pos_x, pos_y, id_account, name_account, groups):
         pg.sprite.Sprite.__init__(self, groups)
         Account.__init__(self, id_account=id_account, name=name_account)
-        surf = pg.Surface((100, 50))
         pg.font.init()
-        pg.draw.rect(surf, (255, 255, 255), (0, 0, 100, 50))
-        font = pg.font.SysFont('arial', 16)
-        text = font.render(f'{self.name}', 1, (7, 85, 30))
-        surf.blit(text, (int((50 - text.get_width()) / 2), 15))
+        surf = pg.Surface((300, 50))
+        surf.fill((255, 255, 255))
         self.image = surf
+        self.font = pg.font.SysFont('arial', 16)
+        self.image_button()
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.menu_close_open = (False,)
 
@@ -178,7 +177,16 @@ class ButtonAccount(pg.sprite.Sprite, Account):
 
     def check(self):
         self.menu_close_open = (True, 'log_in')
+        self.image_button()
         print(f'Вход в аккаунт с id ={self.id}')
+
+    def image_button(self):
+        if self.return_log_in_account() == self.id:
+            self.image.fill(pg.Color('pink'))
+        else:
+            self.image.fill(pg.Color('white'))
+        self.text = self.font.render(f'{self.name}', 1, (7, 85, 30))
+        self.image.blit(self.text, (int((50 - self.text.get_width()) / 2), 15))
 
 
 class ButtonCreateNewAccount(Button, Account):
