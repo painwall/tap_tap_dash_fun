@@ -18,7 +18,10 @@ class Account:
             return int(txt.read())
 
     def delete_account(self):
-        pass
+        self.cur.execute(f'DELETE FROM accounts WHERE id = {self.id}')
+        self.con.commit()
+        with open('data/accounts/id_account.txt', mode='w') as txt:
+            txt.write('0')
 
     def edit_name(self):
         pass

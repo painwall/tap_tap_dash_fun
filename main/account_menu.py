@@ -7,6 +7,7 @@ from main.objects.input_field import InputField
 from main.objects.group_sprites import all_sprites, accounts_group, offset_y_group
 from main.objects.scrollbar import Scrollbar
 from main.objects.label import Label
+from main.objects.buttons import ButtonDeleteAccount
 
 
 class AccountMenu:
@@ -18,7 +19,7 @@ class AccountMenu:
         self.btn_create_new_account = \
             ButtonCreateNewAccount(350, 100, self.input_field.text, (offset_y_group, all_sprites), None)
         self.scrollbar = Scrollbar(790, 0, (offset_y_group,), offset_y=True)
-        self.btn_get_start_menu = ButtonGetStartMenu(300, 550, (all_sprites,))
+        self.btn_get_start_menu = ButtonGetStartMenu(20, 550, (all_sprites,))
         self.index_btn_account = None
         self.labels = {'field_new_account': Label((all_sprites, offset_y_group), (307.5, 10), (185, 20),
                                                   text='Поле для ввода имени аккаунта:', background=(0, 198, 255))}
@@ -40,11 +41,15 @@ class AccountMenu:
                 self.btn_create_new_account.name = self.input_field.text
 
             for btn_account in self.list_btns_account:
-                btn_account.image_button()
-                if btn_account.menu_close_open[0]:
-                    if btn_account.menu_close_open[1] == 'log_in':
-                        btn_account.log_in()
-                        btn_account.menu_close_open = (False,)
+                btn_account[0].image_button()
+                if btn_account[0].menu_close_open[0]:
+                    if btn_account[0].menu_close_open[1] == 'log_in':
+                        btn_account[0].log_in()
+                        btn_account[0].menu_close_open = (False,)
+                elif btn_account[1].menu_close_open[0]:
+                    if btn_account[1].menu_close_open[1] == 'delete_account':
+                        btn_account[1].menu_close_open = (False,)
+                        self.update_accounts()
             if self.btn_create_new_account.menu_close_open[0]:
                 self.update_accounts()
                 self.btn_create_new_account.menu_close_open = (False,)
@@ -62,8 +67,12 @@ class AccountMenu:
 
     def update_accounts(self):
         delete_all_sprites(groups=(accounts_group,))
+        print(self.account.get_list_accounts())
         self.list_btns_account = [
-            ButtonAccount(250, ind * 60 + self.number, self.account.get_list_accounts()[ind][0],
-                          self.account.get_list_accounts()[ind][1], (accounts_group, offset_y_group,
-                                                                     all_sprites))
-            for ind in range(len(self.account.get_list_accounts()))]
+            (
+                ButtonAccount(250, ind * 64 + self.number, self.account.get_list_accounts()[ind][0],
+                              self.account.get_list_accounts()[ind][1], (accounts_group, offset_y_group,
+                                                                         all_sprites)),
+                ButtonDeleteAccount(570, ind * 64 + self.number, self.account.get_list_accounts()[ind][0],
+                               (accounts_group, offset_y_group, all_sprites))
+            ) for ind in range(len(self.account.get_list_accounts()))]

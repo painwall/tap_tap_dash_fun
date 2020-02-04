@@ -49,7 +49,7 @@ class ButtonGetLevel(pg.sprite.Sprite):
         with open('data/accounts/id_account.txt') as txt:
             id_account = int(txt.read())
             print(self.cur.execute(f'SELECT pass_levels'
-                                        f' FROM accounts WHERE id={id_account}').fetchall())
+                                   f' FROM accounts WHERE id={id_account}').fetchall())
             if str(number) \
                     in self.cur.execute(f'SELECT pass_levels'
                                         f' FROM accounts WHERE id={id_account}').fetchall()[0][0].split(' '):
@@ -159,10 +159,10 @@ class ButtonAccount(pg.sprite.Sprite, Account):
         pg.sprite.Sprite.__init__(self, groups)
         Account.__init__(self, id_account=id_account, name=name_account)
         pg.font.init()
-        surf = pg.Surface((300, 50))
+        surf = pg.Surface((300, 64))
         surf.fill((255, 255, 255))
         self.image = surf
-        self.font = pg.font.SysFont('arial', 16)
+        self.font = pg.font.SysFont('arial', 20)
         self.image_button()
         self.rect = self.image.get_rect().move(pos_x, pos_y)
         self.menu_close_open = (False,)
@@ -187,7 +187,7 @@ class ButtonAccount(pg.sprite.Sprite, Account):
         else:
             self.image.fill(pg.Color('white'))
         self.text = self.font.render(f'{self.name}', 1, (7, 85, 30))
-        self.image.blit(self.text, (int((50 - self.text.get_width()) / 2), 15))
+        self.image.blit(self.text, (10, 15))
 
 
 class ButtonCreateNewAccount(Button, Account):
@@ -209,3 +209,18 @@ class ButtonCreateNewAccount(Button, Account):
 
     def check(self):
         self.menu_close_open = (True, 'create_new_account')
+
+
+class ButtonDeleteAccount(Button, Account):
+    def __init__(self, pos_x, pos_y, id_account, groups):
+        Button.__init__(self, pos_x, pos_y,
+                        'textures/delete_account.png',
+                        'textures/delete_account.png', groups)
+        Account.__init__(self, id_account)
+
+    def run(self):
+        if self.id > 0:
+            self.delete_account()
+
+    def check(self):
+        self.menu_close_open = (True, 'delete_account')
