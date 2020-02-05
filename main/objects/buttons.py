@@ -1,5 +1,5 @@
 import pygame as pg
-from main.objects.account import Account
+from main.objects.account import Account, check_account
 from main.objects.label import Label
 import sqlite3
 
@@ -201,7 +201,8 @@ class ButtonCreateNewAccount(Button, Account):
 
     def run(self):
         try:
-            self.create_new_account(self.name)
+            if check_account(self.name)[-1]:
+                self.create_new_account(self.name)
         except sqlite3.OperationalError:
             import traceback
             print(traceback.print_exc())

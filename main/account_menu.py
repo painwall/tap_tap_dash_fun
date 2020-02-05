@@ -1,7 +1,7 @@
 import pygame as pg
 from main.window import clock, screen
 from main.delete_all_sprites import delete_all_sprites
-from main.objects.account import Account
+from main.objects.account import Account, check_account
 from main.objects.buttons import ButtonAccount, ButtonCreateNewAccount, ButtonGetStartMenu
 from main.objects.input_field import InputField
 from main.objects.group_sprites import all_sprites, accounts_group, offset_y_group
@@ -22,7 +22,9 @@ class AccountMenu:
         self.btn_get_start_menu = ButtonGetStartMenu(20, 550, (all_sprites,))
         self.index_btn_account = None
         self.labels = {'field_new_account': Label((all_sprites, offset_y_group), (307.5, 10), (185, 20),
-                                                  text='Поле для ввода имени аккаунта:', background=(0, 198, 255))}
+                                                  text='Поле для ввода имени аккаунта:', background=(0, 198, 255)),
+                       'label_status_new_account': Label((all_sprites, offset_y_group),
+                                                         (500, 400), (200, 200), text=' ', background=(0, 198, 255))}
         self.list_btns_account = []
         self.update_accounts()
         self.run()
@@ -39,6 +41,8 @@ class AccountMenu:
                 all_sprites.update(event)
                 accounts_group.update(event)
                 self.scrollbar.update(event)
+                self.labels['label_status_new_account'].text = check_account(self.input_field.text)[0].split('\n')
+                self.labels['label_status_new_account'].render_text()
                 self.btn_create_new_account.name = self.input_field.text
 
             for btn_account in self.list_btns_account:
