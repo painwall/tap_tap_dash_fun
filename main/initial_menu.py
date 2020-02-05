@@ -28,18 +28,18 @@ class InitialMenu:
 
             all_sprites.draw(screen)
             pg.display.flip()
-            if self.btn_get_lvl_menu.menu_close_open[0]:
-                menu_close_open = self.btn_get_lvl_menu.menu_close_open
+            if self.btn_get_lvl_menu.event[0]:
+                event = self.btn_get_lvl_menu.event
                 running = False
-            elif self.button_your_account.menu_close_open[0]:
-                menu_close_open = self.button_your_account.menu_close_open
+            elif self.button_your_account.event[0]:
+                event = self.button_your_account.event
                 running = False
 
         try:
-            if menu_close_open[1] == 'btn_get_lvl_menu':
+            if event[1] == 'btn_get_lvl_menu':
                 from main.level_menu import LevelMenu
                 LevelMenu()
-            if menu_close_open[1] == 'btn_account':
+            if event[1] == 'btn_account':
                 from main.account_menu import AccountMenu
                 AccountMenu()
 

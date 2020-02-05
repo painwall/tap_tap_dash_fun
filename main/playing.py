@@ -101,14 +101,14 @@ class Play:
             skin_group.draw(screen)
             pg.display.flip()
             clock.tick(120)
-            if self.player.menu_close_open[0]:
-                menu_close_open = self.player.menu_close_open
+            if self.player.event[0]:
+                event = self.player.event
                 running = False
 
-        if menu_close_open[1] == 'restart_menu':
+        if event[1] == 'restart_menu':
             from main.restart_menu import RestartMenu
             RestartMenu(self.level)
-        elif menu_close_open[1] == 'new_level':
+        elif event[1] == 'new_level':
             if int(self.level) >= len(os.listdir('levels')):
                 from main.level_menu import LevelMenu
                 LevelMenu()

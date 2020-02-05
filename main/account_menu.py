@@ -13,7 +13,7 @@ from main.objects.buttons import ButtonDeleteAccount
 class AccountMenu:
     def __init__(self):
         delete_all_sprites()
-        self.number = 200
+        self.number = 210
         self.account = Account(None)
         self.input_field = InputField(250, 40, 300, 50, (offset_y_group, all_sprites))
         self.btn_create_new_account = \
@@ -23,6 +23,7 @@ class AccountMenu:
         self.index_btn_account = None
         self.labels = {'field_new_account': Label((all_sprites, offset_y_group), (307.5, 10), (185, 20),
                                                   text='Поле для ввода имени аккаунта:', background=(0, 198, 255))}
+        self.list_btns_account = []
         self.update_accounts()
         self.run()
 
@@ -42,26 +43,26 @@ class AccountMenu:
 
             for btn_account in self.list_btns_account:
                 btn_account[0].image_button()
-                if btn_account[0].menu_close_open[0]:
-                    if btn_account[0].menu_close_open[1] == 'log_in':
+                if btn_account[0].event[0]:
+                    if btn_account[0].event[1] == 'log_in':
                         btn_account[0].log_in()
-                        btn_account[0].menu_close_open = (False,)
-                elif btn_account[1].menu_close_open[0]:
-                    if btn_account[1].menu_close_open[1] == 'delete_account':
-                        btn_account[1].menu_close_open = (False,)
+                        btn_account[0].event = (False,)
+                elif btn_account[1].event[0]:
+                    if btn_account[1].event[1] == 'delete_account':
+                        btn_account[1].event = (False,)
                         self.update_accounts()
-            if self.btn_create_new_account.menu_close_open[0]:
+            if self.btn_create_new_account.event[0]:
                 self.update_accounts()
-                self.btn_create_new_account.menu_close_open = (False,)
-            if self.btn_get_start_menu.menu_close_open[0]:
-                menu_close_open = self.btn_get_start_menu.menu_close_open
+                self.btn_create_new_account.event = (False,)
+            if self.btn_get_start_menu.event[0]:
+                event = self.btn_get_start_menu.event
                 running = False
 
             all_sprites.draw(screen)
             accounts_group.draw(screen)
             pg.display.flip()
 
-        if menu_close_open[1] == 'initial_menu':
+        if event[1] == 'initial_menu':
             from main.initial_menu import InitialMenu
             InitialMenu()
 
@@ -74,5 +75,5 @@ class AccountMenu:
                               self.account.get_list_accounts()[ind][1], (accounts_group, offset_y_group,
                                                                          all_sprites)),
                 ButtonDeleteAccount(570, ind * 64 + self.number, self.account.get_list_accounts()[ind][0],
-                               (accounts_group, offset_y_group, all_sprites))
+                                    (accounts_group, offset_y_group, all_sprites))
             ) for ind in range(len(self.account.get_list_accounts()))]

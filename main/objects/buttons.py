@@ -10,7 +10,7 @@ class Button(pg.sprite.Sprite):
         self.image = pg.image.load(image)
         self.final_image = pg.image.load(final_image)
         self.rect = self.image.get_rect().move(pos_x, pos_y)
-        self.menu_close_open = (False,)
+        self.event = (False,)
         self.speed_x = 0
         self.speed_y = 0
         self.move = False  # может двигаться кнопка или нет
@@ -24,7 +24,7 @@ class Button(pg.sprite.Sprite):
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
             self.image = self.final_image
             self.run()
-            self.check()
+            self.make_event()
         if self.move and args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 4:
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
@@ -32,7 +32,7 @@ class Button(pg.sprite.Sprite):
             self.rect.x -= self.speed_x
             self.rect.y -= self.speed_y
 
-    def check(self):
+    def make_event(self):
         pass
 
     def run(self):
@@ -72,7 +72,7 @@ class ButtonGetLevel(pg.sprite.Sprite):
         surf_final.blit(text, (int((50 - text.get_width()) / 2), 15))
         self.final_image = surf_final
         self.rect = self.image.get_rect().move(pos_x, pos_y)
-        self.menu_close_open = (False,)
+        self.event = (False,)
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
@@ -81,14 +81,14 @@ class ButtonGetLevel(pg.sprite.Sprite):
             0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height and self.flag:
             self.image = self.final_image
-            self.check()
+            self.make_event()
         elif args and args[0].type == pg.MOUSEBUTTONDOWN and args[0].button == 3 \
                 and self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
-            self.check(mode='statistics')
+            self.make_event(mode='statistics')
 
-    def check(self, mode='play'):
-        self.menu_close_open = (True, mode, self.level)
+    def make_event(self, mode='play'):
+        self.event = (True, mode, self.level)
 
 
 class ButtonGetStartMenu(Button):
@@ -99,8 +99,8 @@ class ButtonGetStartMenu(Button):
         self.speed_x = speed_x
         self.speed_y = speed_y
 
-    def check(self):
-        self.menu_close_open = (True, 'initial_menu')
+    def make_event(self):
+        self.event = (True, 'initial_menu')
 
 
 class ButtonGetLevelMenu(Button):
@@ -111,8 +111,8 @@ class ButtonGetLevelMenu(Button):
         self.speed_x = speed_x
         self.speed_y = speed_y
 
-    def check(self):
-        self.menu_close_open = (True, 'btn_get_lvl_menu')
+    def make_event(self):
+        self.event = (True, 'btn_get_lvl_menu')
 
 
 class ButtonGetSkins(Button):
@@ -136,8 +136,8 @@ class ButtonRestart(Button):
         self.speed_x = speed_x
         self.speed_y = speed_y
 
-    def check(self):
-        self.menu_close_open = (True, 'btn_restart')
+    def make_event(self):
+        self.event = (True, 'btn_restart')
 
 
 class ButtonYourAccount(Button):
@@ -150,8 +150,8 @@ class ButtonYourAccount(Button):
         self.speed_x = speed_x
         self.speed_y = speed_y
 
-    def check(self):
-        self.menu_close_open = (True, 'btn_account')
+    def make_event(self):
+        self.event = (True, 'btn_account')
 
 
 class ButtonAccount(pg.sprite.Sprite, Account):
@@ -165,7 +165,7 @@ class ButtonAccount(pg.sprite.Sprite, Account):
         self.font = pg.font.SysFont('arial', 20)
         self.image_button()
         self.rect = self.image.get_rect().move(pos_x, pos_y)
-        self.menu_close_open = (False,)
+        self.event = (False,)
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]
@@ -174,10 +174,10 @@ class ButtonAccount(pg.sprite.Sprite, Account):
         if args and args[0].type == pg.MOUSEBUTTONDOWN and args[
             0].button == 1 and self.rect.x <= x <= self.rect.x + self.rect.width \
                 and self.rect.y <= y <= self.rect.y + self.rect.height:
-            self.check()
+            self.make_event()
 
-    def check(self):
-        self.menu_close_open = (True, 'log_in')
+    def make_event(self):
+        self.event = (True, 'log_in')
         self.image_button()
         print(f'Вход в аккаунт с id ={self.id}')
 
@@ -207,8 +207,8 @@ class ButtonCreateNewAccount(Button, Account):
             print(traceback.print_exc())
             print('Аккаунт не был создан')
 
-    def check(self):
-        self.menu_close_open = (True, 'create_new_account')
+    def make_event(self):
+        self.event = (True, 'create_new_account')
 
 
 class ButtonDeleteAccount(Button, Account):
@@ -222,5 +222,5 @@ class ButtonDeleteAccount(Button, Account):
         if self.id > 0:
             self.delete_account()
 
-    def check(self):
-        self.menu_close_open = (True, 'delete_account')
+    def make_event(self):
+        self.event = (True, 'delete_account')

@@ -24,13 +24,13 @@ class Scrollbar(pg.sprite.Sprite):
 
     def update(self, *args):
         if args and args[0].type == pg.MOUSEBUTTONDOWN:
-            if args[0].button == 4:
+            if args[0].button == 5:
                 if self.offset_x:
                     self.speed_x = abs(self.speed_x)
                 elif self.offset_y:
                     self.speed_y = abs(self.speed_y)
                 self.update_sprites()
-            elif args[0].button == 5:
+            elif args[0].button == 4:
                 if self.offset_x:
                     self.speed_x = -abs(self.speed_x)
                 elif self.offset_y:

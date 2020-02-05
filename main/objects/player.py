@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.time_start = 0
         self.time_fly = 533 / speed * 2
         self.direction_of_movement(0)
-        self.menu_close_open = (False,)
+        self.event = (False,)
         self.skin = Skin(self.rect.x, self.rect.y, speed, self.time_fly)
 
     def move(self):
@@ -78,6 +78,6 @@ class Player(pg.sprite.Sprite):
                 self.skin.edit_row(1)
 
     def check(self, booll, name_menu):
-        self.menu_close_open = (booll, name_menu)
+        self.event = (booll, name_menu)
 
 

@@ -37,25 +37,25 @@ class LevelMenu:
 
             all_sprites.draw(screen)
             pg.display.flip()
-            if self.btn_get_initial_menu.menu_close_open[0]:
-                menu_close_open = self.btn_get_initial_menu.menu_close_open
+            if self.btn_get_initial_menu.event[0]:
+                event = self.btn_get_initial_menu.event
                 running = False
             for btn_lvl in self.list_levels:
-                if btn_lvl.menu_close_open[0]:
-                    menu_close_open = btn_lvl.menu_close_open
+                if btn_lvl.event[0]:
+                    event = btn_lvl.event
                     running = False
         try:
-            if menu_close_open[1] == 'initial_menu':
+            if event[1] == 'initial_menu':
                 from main.initial_menu import InitialMenu
                 InitialMenu()
-            elif menu_close_open[1] == 'play':
+            elif event[1] == 'play':
                 from main.playing import Play
-                print(menu_close_open[2])
-                Play(menu_close_open[2])
+                print(event[2])
+                Play(event[2])
 
-            elif menu_close_open[1] == 'statistics':
+            elif event[1] == 'statistics':
                 from main.statistics_menu import StatisticsMenu
-                print(menu_close_open)
-                StatisticsMenu(menu_close_open[2])
+                print(event)
+                StatisticsMenu(event[2])
         except BaseException:
             print('Ошибка:\n', traceback.format_exc())

@@ -25,22 +25,22 @@ class RestartMenu:
                     all_sprites.update(event)
                 if event.type == pg.KEYDOWN and event.key == 114:
                     running = False
-                    menu_close_open = (0, 'btn_restart')
+                    event = (0, 'btn_restart')
 
 
-            if btn_get_lvl_menu.menu_close_open[0] == True:
-                menu_close_open = btn_get_lvl_menu.menu_close_open
+            if btn_get_lvl_menu.event[0] == True:
+                event = btn_get_lvl_menu.event
                 running = False
-            elif btn_restart.menu_close_open[0] == True:
-                menu_close_open = btn_restart.menu_close_open
+            elif btn_restart.event[0] == True:
+                event = btn_restart.event
                 running = False
 
             all_sprites.draw(screen)
             pg.display.flip()
 
-        if menu_close_open[1] == 'btn_get_lvl_menu':
+        if event[1] == 'btn_get_lvl_menu':
             from main.level_menu import LevelMenu
             LevelMenu()
-        elif menu_close_open[1] == 'btn_restart':
+        elif event[1] == 'btn_restart':
             from main.playing import Play
             Play(self.level)
