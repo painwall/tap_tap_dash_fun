@@ -10,7 +10,7 @@ class CheckBox(pg.sprite.Sprite):
         self.flag = False
         self.color = pg.Color('white')
         self.event = (False,)
-        self.edit_image()
+        self.image.fill(self.color)
 
     def edit_image(self):
         if self.flag:

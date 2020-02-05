@@ -20,6 +20,10 @@ class Account:
     def delete_account(self):
         self.cur.execute(f'DELETE FROM accounts WHERE id = {self.id}')
         self.con.commit()
+        con = sqlite3.connect('data/statictics.db')
+        cur = con.cursor()
+        cur.execute('DELETE FROM travel WHERE id = {self.id}')
+        con.commit()
         with open('data/accounts/id_account.txt', mode='w') as txt:
             txt.write('0')
 

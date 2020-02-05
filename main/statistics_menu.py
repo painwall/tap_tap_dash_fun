@@ -1,6 +1,6 @@
 import pygame as pg
 from main.objects.buttons import ButtonGetLevelMenu
-from main.objects.group_sprites import all_sprites, offset_y_group
+from main.objects.group_sprites import all_sprites, offset_y_group, statistical_time_group
 from main.delete_all_sprites import delete_all_sprites
 from main.window import screen
 from main.objects.scrollbar import Scrollbar
@@ -25,18 +25,48 @@ class StatisticsMenu:
     def get_text(self):
         con = sqlite3.connect('data/statistics.db')
         cur = con.cursor()
-        self.times = cur.execute(f'SELECT travel_time'
-                                 f' FROM travel WHERE'
-                                 f' level == {self.level}'
-                                 f' and id_account={self.id_account}').fetchall()
-        self.times = set(map(lambda x: (x[0], int(''.join(x[0].split(':')))), self.times))
-        self.times = sorted(self.times, key=lambda x: x[0])
-        self.create_times()
+        con_account = sqlite3.connect('data/accounts/accounts.db')
+        cur_account = con_account.cursor()
+        if self.check_box.flag:
+            self.times = cur.execute(f'SELECT travel_time, id_account'
+                                     f' FROM travel WHERE'
+                                     f' level == {self.level}').fetchall()
+        else:
+            self.times = cur.execute(f'SELECT travel_time, id_account'
+                                     f' FROM travel WHERE'
+                                     f' level == {self.level}'
+                                     f' and id_account={self.id_account}').fetchall()
+        self.times = set(map(lambda x: (x[0], x[1], int(''.join(x[0].split(':')))), self.times))
+        print(self.times, 'check')
+        self.times = sorted(self.times, key=lambda x: x[-1])
+        dict_accounts = {}
+        for el in self.times:
+            try:
+                dict_accounts[str(el[1])] = str(cur_account.execute(f'SELECT account_name'
+                                                                    f' FROM accounts'
+                                                                    f' WHERE id={el[1]}').fetchone()[0])
+            except TypeError:
+                pass
+        print(dict_accounts)
+        self.create_times(dict_accounts)
 
-    def create_times(self):
+    def create_times(self, dict_accounts):
+        for sprite in statistical_time_group:
+            sprite.kill()
+
         for time in self.times:
-            StatisticalTime(0, self.times.index(time) * 30, self.times.index(time) + 1, time[0],
-                            (all_sprites, offset_y_group))
+            if self.check_box.flag:
+                try:
+                    StatisticalTime(0, self.times.index(time) * 30,
+                                    self.times.index(time) + 1, f'{time[0]} - {str(dict_accounts[str(time[1])])}',
+                                    (all_sprites, offset_y_group, statistical_time_group))
+                except KeyError:
+                    StatisticalTime(0, self.times.index(time) * 30,
+                                    self.times.index(time) + 1, f'{time[0]} - Удаленный аккаунт',
+                                    (all_sprites, offset_y_group, statistical_time_group))
+            else:
+                StatisticalTime(0, self.times.index(time) * 30, self.times.index(time) + 1, time[0],
+                                (all_sprites, offset_y_group, statistical_time_group))
 
     def run(self):
         running = True
@@ -53,6 +83,9 @@ class StatisticsMenu:
             if self.btn_get_lvl_menu.event[0]:
                 event = self.btn_get_lvl_menu.event
                 running = False
+            if self.check_box.event[0]:
+                self.get_text()
+                self.check_box.event = (False,)
 
         if event[1] == 'btn_get_lvl_menu':
             from main.level_menu import LevelMenu
