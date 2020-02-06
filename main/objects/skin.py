@@ -11,7 +11,7 @@ class Skin(AnimatedSprite):
                          (9, 7), (1, 1), 64, 64,
                          skin_group, all_sprites)
 
-        self.delay_animation = [(speed + 300) / 4.5, time_fly / 7]
+        self.delay_animation = [(speed + 300) / 4.5, time_fly / 6]
         self.time = 0
         self.angle = 0
         self.rect = self.image.get_rect().move(x, y)
