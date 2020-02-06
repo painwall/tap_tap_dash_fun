@@ -16,11 +16,10 @@ class CheckBox(pg.sprite.Sprite):
         if self.flag:
             self.flag = False
             self.image.fill(self.color)
-            # pg.draw.rect(self.image, (0, 0, 0), (10, 10, 10, 10))
-            self.image.blit(self.mark, (0, 0))
         else:
             self.flag = True
             self.image.fill(self.color)
+            self.image.blit(self.mark, (0, 0))
 
     def update(self, *args):
         x = pg.mouse.get_pos()[0]

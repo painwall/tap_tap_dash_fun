@@ -3,17 +3,27 @@ from main.window import screen, clock
 from main.objects.group_sprites import all_sprites
 from main.objects.buttons import ButtonGetLevelMenu, ButtonRestart
 from main.delete_all_sprites import delete_all_sprites
+from main.objects.label import Label
 
 
 class RestartMenu:
     def __init__(self, level):
         self.level = level
+        delete_all_sprites()
+        self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 275, (all_sprites,))
+        self.btn_restart = ButtonRestart(300, 375, (all_sprites,))
+        self.labels = {
+            'help_restart': Label(all_sprites, (550, 580), (220, 25),
+                                  background='white',
+                                  text='R - перезапуск уровня в этом меню',
+                                  size_font=16),
+            'help_play': Label(all_sprites, (30, 30), (235, 70),
+                               text='Управление:\n1. Стрелочки для смены направления движения\n'
+                                    '2. Пробел - прыжок', background='white', size_font=16)
+        }
         self.run()
 
     def run(self):
-        delete_all_sprites()
-        btn_get_lvl_menu = ButtonGetLevelMenu(300, 275, (all_sprites,))
-        btn_restart = ButtonRestart(300, 375, (all_sprites,))
         running = True
         while running:
             screen.fill((0, 198, 255))
@@ -28,11 +38,11 @@ class RestartMenu:
                     event = (0, 'btn_restart')
 
 
-            if btn_get_lvl_menu.event[0] == True:
-                event = btn_get_lvl_menu.event
+            if self.btn_get_lvl_menu.event[0]:
+                event = self.btn_get_lvl_menu.event
                 running = False
-            elif btn_restart.event[0] == True:
-                event = btn_restart.event
+            elif self.btn_restart.event[0]:
+                event = self.btn_restart.event
                 running = False
 
             all_sprites.draw(screen)

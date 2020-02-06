@@ -111,10 +111,14 @@ class Play:
         elif event[1] == 'new_level':
             if int(self.level) >= len(os.listdir('levels')):
                 from main.level_menu import LevelMenu
+                add_in_statistics('travel',
+                                  ('level', 'travel_time'),
+                                  (self.level, f'{self.timer.time // 60000}'
+                                               f':{self.timer.time // 1000}'
+                                               f':{self.timer.time % 1000}'))
+                add_pass_level(self.level)
                 LevelMenu()
             else:
-                add_in_statistics('travel', ('level', 'travel_time'), (self.level, f'{self.timer.time // 60000}:{self.timer.time // 1000}:{self.timer.time % 1000}'))
-                add_pass_level(self.level)
+                add_in_statistics('travel', ('level', 'travel_time'), (
+                self.level, f'{self.timer.time // 60000}:{self.timer.time // 1000}:{self.timer.time % 1000}'))
                 Play(self.level + 1)
-
-

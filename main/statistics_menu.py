@@ -6,6 +6,7 @@ from main.window import screen
 from main.objects.scrollbar import Scrollbar
 from main.objects.statistical_time import StatisticalTime
 from main.objects.check_box import CheckBox
+from main.objects.label import Label
 import sqlite3
 
 
@@ -15,7 +16,22 @@ class StatisticsMenu:
         self.btn_get_lvl_menu = ButtonGetLevelMenu(300, 550, (all_sprites,))
         self.level = level
         self.scrollbar = Scrollbar(790, 0, (offset_y_group,), offset_y=True)
-        self.check_box = CheckBox((500, 500), (all_sprites,))
+        self.check_box = CheckBox((730, 500), (all_sprites,))
+        self.labels = {
+            'Your_statictics': Label((all_sprites, offset_y_group), (265
+                                                                     , 0),
+                                     (270, 72 * 1.338307),
+                                     background=(0, 198, 255),
+                                     text='Статистика уровня\n          (Время)',
+                                     size_font=36),
+            'View_full_statictics': Label(all_sprites, (550, 522), (180, 25),
+                                          background=(0, 198, 255),
+                                          text='Показать полную статистику',
+                                          size_font=16),
+            'Help': Label(all_sprites, (600, 570), (200, 20),
+                          background=(0, 198, 225),
+                          text='Колесико мыши для просмотра выше/ниже')
+        }
         with open('data/accounts/id_account.txt') as txt:
             self.id_account = int(txt.read())
         self.times = []
@@ -57,15 +73,15 @@ class StatisticsMenu:
         for time in self.times:
             if self.check_box.flag:
                 try:
-                    StatisticalTime(0, self.times.index(time) * 30,
+                    StatisticalTime(30, self.times.index(time) * 30 + 100,
                                     self.times.index(time) + 1, f'{time[0]} - {str(dict_accounts[str(time[1])])}',
                                     (all_sprites, offset_y_group, statistical_time_group))
                 except KeyError:
-                    StatisticalTime(0, self.times.index(time) * 30,
+                    StatisticalTime(30, self.times.index(time) * 30 + 100,
                                     self.times.index(time) + 1, f'{time[0]} - Удаленный аккаунт',
                                     (all_sprites, offset_y_group, statistical_time_group))
             else:
-                StatisticalTime(0, self.times.index(time) * 30, self.times.index(time) + 1, time[0],
+                StatisticalTime(30, self.times.index(time) * 30 + 100, self.times.index(time) + 1, time[0],
                                 (all_sprites, offset_y_group, statistical_time_group))
 
     def run(self):
