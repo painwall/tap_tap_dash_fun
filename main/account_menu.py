@@ -13,18 +13,20 @@ from main.objects.buttons import ButtonDeleteAccount
 class AccountMenu:
     def __init__(self):
         delete_all_sprites()
-        self.number = 210
+        self.number = 240
         self.account = Account(None)
-        self.input_field = InputField(250, 40, 300, 50, (offset_y_group, all_sprites))
+        self.input_field = InputField(250, 40, 300, 50, (offset_y_group, all_sprites), 18)
         self.btn_create_new_account = \
-            ButtonCreateNewAccount(350, 100, self.input_field.text, (offset_y_group, all_sprites), None)
+            ButtonCreateNewAccount(350, 150, self.input_field.text, (all_sprites, offset_y_group), None)
         self.scrollbar = Scrollbar(790, 0, (offset_y_group,), offset_y=True)
         self.btn_get_start_menu = ButtonGetStartMenu(20, 550, (all_sprites,))
-        self.index_btn_account = None
         self.labels = {'field_new_account': Label((all_sprites, offset_y_group), (307.5, 10), (185, 20),
-                                                  text='Поле для ввода имени аккаунта:', background=(0, 198, 255)),
+                                                  text='Поле для ввода имени аккаунта:', background=(0, 198, 255),
+                                                  size_font=14),
                        'label_status_new_account': Label((all_sprites, offset_y_group),
-                                                         (500, 400), (200, 200), text=' ', background=(0, 198, 255))}
+                                                         (300, 100), (200, 50), text=' ', background=(0, 198, 255),
+                                                         size_font=14)
+                       }
         self.list_btns_account = []
         self.update_accounts()
         self.run()
@@ -63,7 +65,6 @@ class AccountMenu:
                 running = False
 
             all_sprites.draw(screen)
-            accounts_group.draw(screen)
             pg.display.flip()
 
         if event[1] == 'initial_menu':
@@ -72,7 +73,6 @@ class AccountMenu:
 
     def update_accounts(self):
         delete_all_sprites(groups=(accounts_group,))
-        print(self.account.get_list_accounts())
         self.list_btns_account = [
             (
                 ButtonAccount(250, ind * 64 + self.number, self.account.get_list_accounts()[ind][0],
